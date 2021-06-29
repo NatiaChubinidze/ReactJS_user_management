@@ -1,0 +1,13 @@
+.background-grey {
+    position: relative;
+    background-color: rgba(49, 49, 49, 0.8);
+  }
+  
+  .toBack {
+    position: relative;
+    z-index: -1;
+  }
+  .pop-up {
+    position: relative;
+    z-index: 100;
+  }

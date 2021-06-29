@@ -1,0 +1,132 @@
+.wrapper {
+    width: 100%;
+    padding: 50px 10% 10px 6%;
+    background-color: #f3f3f3;
+  }
+  
+  table th {
+    height: 60px;
+    padding-bottom: 30px;
+    border: 0px;
+  }
+  table th span {
+    cursor: pointer;
+  }
+  table th:not(:first-child) {
+    border-bottom: 2px solid #00000029 !important;
+  }
+  table td {
+    height: 80px;
+    padding-top: 20px;
+    padding-left: 0px;
+  }
+  table p {
+    width: fit-content;
+    margin: 0px;
+  }
+  .user-info p {
+    font: normal normal 300 16px/21px Segoe UI;
+    letter-spacing: 0px;
+  }
+  .user-info span {
+    width: fit-content;
+  }
+  .user-info {
+    width: 100%;
+    height: 100%;
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+  }
+  
+  .thumbnail {
+    border: 0px;
+    text-align: left;
+    padding-left: 13px;
+    width: 120px;
+  }
+  .thumbnail img {
+    width: 45.64px;
+    height: 45.64px;
+  }
+  .th-user {
+    text-align: left;
+  }
+  .th-role {
+    width: 190px;
+  }
+  .th-actions {
+    width: 100px;
+  }
+  
+  .td-role {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .td-role p {
+    margin-top: 5px;
+  }
+  .admin-div {
+    width: 48px;
+    height: 32px;
+    background-color: #7e7ef1;
+    border-radius: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+  }
+  .admin-div img {
+    width: 24px;
+    height: 24px;
+  }
+  .td-status {
+    text-align: center;
+    padding-left: 20px;
+  }
+  .td-actions {
+    text-align: right;
+  }
+  .actions {
+    width: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5px;
+    padding-top: 7px;
+    justify-self: flex-end;
+  }
+  .settings-img {
+    width: 18px;
+    height: 18px;
+  }
+  .recycleBin-img {
+    width: 13px;
+    height: 18px;
+  }
+  .settings-img:hover,
+  .recycleBin-img:hover {
+    cursor: pointer;
+  }
+  .cont-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .toggle-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .toggle-btn {
+    width: 100px;
+    height: 25px;
+  }

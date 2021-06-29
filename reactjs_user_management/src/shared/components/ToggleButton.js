@@ -1,11 +1,11 @@
-import '../styles/ToggleButton.css';
+import '../../styles/ToggleButton.css';
 
-function ToggleButton() {
+function ToggleButton(props) {
   return (
-    <div class="cont">
-    <label class="switch">
-      <input type="checkbox" checked={this.props.toggleChecked} />
-      <span class="slider"></span>
+    <div className="cont">
+    <label className="switch">
+      <input type="checkbox" checked={props.toggleChecked} />
+      <span className="slider"></span>
     </label>
   </div>
   );
