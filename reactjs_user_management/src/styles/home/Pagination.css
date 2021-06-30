@@ -6,31 +6,40 @@
     padding-left: 6%;
     padding-right: 10%;
   }
-  .wrapper {
+  .pagination-wrapper {
     display: flex;
     width: 310px;
     justify-content: space-between;
     padding-left: 120px;
   }
-  .light {
+  .light-btn {
     background-color: #f3f3f3;
     width: 50px;
-    padding: 5px;
+    padding: 0px !important;
+    margin:0px !important;
   }
   
-  .dropdown-menu {
+  .pagination-dropdown-menu {
     display: none;
     background-color: #f3f3f3 !important;
+    width:100%;
+    list-style-type: none;
+    padding-left:5px;
     /* border:0px; */
   }
-  .dropdown:hover .dropdown-menu {
+  .pagination-dropdown:hover .pagination-dropdown-menu{
     display: block;
   }
-  .dropdown {
+  .pagination-dropdown {
     display: inline-block;
   }
-  .arrow {
+  .pagination-arrow {
     width: 10px;
     position: relative;
     right: 10px;
+    top:3px;
+  }
+  .pagination-title{
+    min-width:130px;
+    margin:0px;
   }

@@ -1,11 +1,11 @@
-.invitation {
+.invitation-invite {
     position: absolute !important;
     top: 0;
     left: 0;
     width: 100%;
     height: 500px;
   }
-  .invitation-box {
+  .invitation-box-invite {
     position: absolute;
     top: calc((100vh - 350px) / 2);
     left: calc((100% - 37%) / 2);
@@ -17,14 +17,14 @@
     flex-direction: column;
   }
   
-  .cancel {
+  .invitation-cancel {
     position: absolute;
     right: 20px;
     top: 20px;
     width: 12px;
     cursor: pointer;
   }
-  h3 {
+  .invitation-h3 {
     font-family: "Segoe UI";
     font-weight: 600;
     font-size: 27px;
@@ -33,7 +33,7 @@
     text-align: left;
     margin-bottom: 50px;
   }
-  .form-wrapper {
+  .invitation-form-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,17 +42,17 @@
     flex-direction: column;
     flex-wrap: nowrap;
   }
-  form {
+  .invitation-form {
     width: 100%;
     height: 100%;
   }
-  .line {
+  .invitation-line {
     width: 100%;
     height: fit-content;
     display: flex;
     justify-content: space-between;
   }
-  .dropbtn {
+  .invitation-dropbtn {
     background-color: white;
     color: #707070;
     padding: 0px 30px 0px 2px;
@@ -64,13 +64,13 @@
     text-align: left;
   }
   
-  .dropdown {
+  .invitation-dropdown {
     position: relative;
     display: inline-block;
     width: 45%;
     height: 28px;
   }
-  .dropdown-content {
+  .invitation-dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -80,7 +80,7 @@
     width: 100%;
   }
   
-  .dropdown-content a {
+  .invitation-dropdown-content a {
     padding: 8px 18px;
     text-decoration: none;
     display: block;
@@ -90,22 +90,22 @@
     font-weight: 300;
   }
   
-  .dropdown-content a:hover {
+  .invitation-dropdown-content a:hover {
     background-color: #f1f1f1;
   }
   
-  .dropdown:hover .dropdown-content {
+  .invitation-dropdown:hover .invitation-dropdown-content {
     display: block;
   }
   
-  .firstName,
-  .lastName {
+  .invitation-firstName,
+  .invitation-lastName {
     width: 45%;
   }
-  .email {
+  .invitation-email {
     width: 91.5%;
   }
-  .icon {
+  .invitation-icon {
     width: 7%;
     height: 28px;
     display: flex;
@@ -113,15 +113,15 @@
     justify-content: center;
     align-items: flex-start;
   }
-  .icon img {
+  .invitation-icon img {
     width: 18px;
     margin-top: 2px;
   }
-  input:focus {
+  .input:focus {
     outline: none;
   }
-  input,
-  .dropbtn {
+  .input,
+  .invitation-dropbtn {
     border: 0px;
     border-bottom: 2px solid #ccc9c9;
   
@@ -129,42 +129,42 @@
     font-family: "Segoe UI";
     font-weight: 300;
   }
-  input::placeholder {
+  .input::placeholder {
     color: #707070;
     font-family: "Segoe UI";
     font-weight: 300;
   }
-  .invisible {
+  .invitation-invisible {
     width: 45%;
   }
-  .arrow {
+  .invitation-arrow {
     width: 12px;
     position: absolute;
     top: 10px;
     right: 5px;
   }
-  .icon img.img {
+  .invitation-icon img.invitation-img {
     margin-top: 5px;
   }
-  .submit-btn,
-  .info-div {
+  .invitation-submit-btn,
+  .invitation-info-div {
     height: 40px;
     padding: 5px;
     border-radius: 35px;
     font-weight: 600;
     font-size: 14px;
   }
-  .submit-btn {
+  .invitation-submit-btn {
     width: 35%;
     border: 0px;
     background-color: #44a0d3;
     color: white;
   }
-  .submit-btn[disabled] {
+  .invitation-submit-btn[disabled] {
     background-color: #c6c6c6;
     color: gray;
   }
-  .info-div {
+  .invitation-info-div {
     width: 37%;
     display: flex;
     align-items: center;
@@ -172,7 +172,7 @@
     font-style: italic;
   }
   
-  .final-section {
+  .invitation-final-section {
     width: 100%;
     height: fit-content;
     padding-left: 8%;

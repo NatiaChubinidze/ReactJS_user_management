@@ -2,10 +2,10 @@ import '../../styles/ToggleButton.css';
 
 function ToggleButton(props) {
   return (
-    <div className="cont">
-    <label className="switch">
-      <input type="checkbox" checked={props.toggleChecked} />
-      <span className="slider"></span>
+    <div className="toggle-cont">
+    <label className="toggle-switch">
+      <input type="checkbox" checked={props.toggleChecked} onChange={()=>{props.toggleState()}} />
+      <span className="toggle-slider"></span>
     </label>
   </div>
   );

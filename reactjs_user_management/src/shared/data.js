@@ -1,5 +1,5 @@
 
-export let USERS = [
+export const USERS = [
   {
     "id": 1,
     "name": "Daniell Blichmann",

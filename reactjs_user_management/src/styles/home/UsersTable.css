@@ -1,4 +1,4 @@
-.wrapper {
+.table-wrapper {
     width: 100%;
     padding: 50px 10% 10px 6%;
     background-color: #f3f3f3;
@@ -52,12 +52,13 @@
   }
   .th-user {
     text-align: left;
+    width:340px;
   }
   .th-role {
-    width: 190px;
+    width: 220px;
   }
   .th-actions {
-    width: 100px;
+    width: 150px;
   }
   
   .td-role {
@@ -70,7 +71,7 @@
   .td-role p {
     margin-top: 5px;
   }
-  .admin-div {
+  .table-admin-div {
     width: 48px;
     height: 32px;
     background-color: #7e7ef1;
@@ -104,12 +105,14 @@
   .settings-img {
     width: 18px;
     height: 18px;
+    position:relative;
+    top:-4px;
   }
   .recycleBin-img {
     width: 13px;
     height: 18px;
   }
-  .settings-img:hover,
+ 
   .recycleBin-img:hover {
     cursor: pointer;
   }
@@ -119,7 +122,7 @@
     display: flex;
     justify-content: flex-end;
   }
-  .toggle-wrapper {
+  .status-toggle-wrapper {
     width: 100%;
     height: 100%;
     display: flex;

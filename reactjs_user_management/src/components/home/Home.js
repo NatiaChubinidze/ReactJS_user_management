@@ -21,8 +21,8 @@ class Home extends Component {
     this.deleteConcreteUser=this.deleteConcreteUser.bind(this);
   }
   changeDeletionPopUp(user) {
-    this.setState({showDeletionWindow:true});
-    this.props.setActiveUser(user);
+    // this.setState({showDeletionWindow:true});
+    // this.props.setActiveUser(user);
   }
   closeDeletionPopUp(showHide) {
     this.setState({showDeletionWindow: showHide});
@@ -48,14 +48,14 @@ class Home extends Component {
   >
     <div
      className={
-        this.props.showDeletionWindow || this.props.showAddUsers ? 'wrapper toBack' : 'wrapper'
+        this.props.showDeletionWindow || this.props.showAddUsers ? 'home-wrapper toBack' : 'home-wrapper'
      }
     >
       <HomeHeader addNewUser={this.props.addNewUser} user={this.props.user}/>
       <UsersTable users={this.props.users} user={this.props.activeUser} filterTerm={this.state.filterTerm} setActiveUser={this.props.setActiveUser} changeDeletionPopUp={this.changeDeletionPopUp} toggleState={this.props.toggleState} />
       <Pagination/>
-      {/* <Invitation/> */}
-      {/* <DeleteUser/> */}
+      <Invitation  addNewUser={ this.props.addNewUser} activeUser={this.props.activeUser}/>
+      {/* <DeleteUser user={this.props.activeUser} deleteConcreteUser={this.props.deleteConcreteUser} closeDeletionPopUp={this.props.closeDeletionPopUp}/> */}
     
     </div>
     </div>

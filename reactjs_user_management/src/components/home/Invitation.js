@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../../styles/home/Invitation.css";
+import CancelIcon from '../../assets/icons/cancel.png';
+import BoyIcon from '../../assets/icons/boy.png';
+import ArrobaIcon from '../../assets/icons/arroba.png';
+import KeyIcon from '../../assets/icons/role_key.png';
+import ArrowIcon from '../../assets/icons/down-arrow.png';
 
 function Invitation(props) {
     const [invitedUser, setInvitedUser]=useState({invitedUser: {
@@ -16,9 +21,9 @@ function Invitation(props) {
       function  submitInvitation(event) {
         event.preventDefault();
         let userToAdd = {
-          name: `${this.invitedUser.firstName} ${this.invitedUser.lastName}`,
-          email: this.invitedUser.email,
-          role: this.invitedUser.role,
+          name: `${invitedUser.firstName} ${invitedUser.lastName}`,
+          email: invitedUser.email,
+          role: invitedUser.role,
           id: Math.round(Math.random() * 1000),
           status: "active",
           per_group_1: {
@@ -41,39 +46,43 @@ function Invitation(props) {
         };
   
         console.log("add this user", userToAdd);
-        this.$emit("inviteUser", userToAdd);
-        this.toggleVisibility();
-        this.invitedUser = {
-          firstName: "",
-          lastName: "",
-          email: "",
-          role: "",
-        };
+      props. addNewUser(userToAdd);
+        toggleVisibility();
+        // setInvitedUser({ invitedUser:{
+        //   firstName: "",
+        //   lastName: "",
+        //   email: "",
+        //   role: "",
+        // }});
+       
       }
       function setRole(event) {
         if (event.target.tagName == "A") {
           document.getElementById("dropbtn").innerText = event.target.innerText;
-          this.invitedUser.role = event.target.innerText.toLowerCase();
+          // setInvitedUser(event.target.innerText.toLowerCase());
+          // invitedUser.role = event.target.innerText.toLowerCase();
           console.log(this.invitedUser.role);
         }
       }
       function validateForm() {
         if (
-          this.emailIsValid() &&
-          this.firstNameIsValid() &&
-          this.lastNameIsValid() &&
-          this.roleIsValid()
+         emailIsValid() &&
+          firstNameIsValid() &&
+          lastNameIsValid() &&
+          roleIsValid()
         ) {
-          this.formIsValid = true;
+          // setFormIsValid(true)
+        //  formIsValid = true;
           return true;
         }
-        this.formIsValid = false;
+        // setFormIsValid(false);
+        // formIsValid = false;
         return false;
       }
       function emailIsValid() {
         if (
           /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-            this.invitedUser.email
+            invitedUser.email
           )
         ) {
           return true;
@@ -81,95 +90,95 @@ function Invitation(props) {
         return false;
       }
       function firstNameIsValid() {
-        if (this.invitedUser.firstName.length > 1) {
+        if (invitedUser.firstName.length > 1) {
           return true;
         }
         return false;
       }
       function lastNameIsValid() {
-        if (this.invitedUser.lastName.length > 1) {
+        if (invitedUser.lastName.length > 1) {
           return true;
         }
         return false;
       }
       function roleIsValid() {
-        if (this.invitedUser.role !== "") {
+        if (invitedUser.role !== "") {
           return true;
         }
         return false;
       }
     
 
+
   return (
-    <div className="invitation">
-      <div className="invitation-box">
+    <div className="invitation-invite">
+      <div className="invitation-box-invite">
         <img
-          src="../../assets/icons/cancel.png"
-          className="cancel"
+          src={CancelIcon}
+          className="invitation-cancel"
           onClick={toggleVisibility}
         />
-        <h3>Invite New User</h3>
-        <form>
-          <div className="form-wrapper">
-            <div className="line">
-              <div className="icon">
-                <img src="../../assets/icons/boy.png" className="img" />
+        <h3 className="invitation-h3">Invite New User</h3>
+        <form className="invitation-form">
+          <div className="invitation-form-wrapper">
+            <div className="invitation-line">
+              <div className="invitation-icon">
+                <img src={BoyIcon} className="invitation-img" />
               </div>
               <input
                 type="text"
-                className="firstName"
+                className="input invitation-firstName"
                 placeholder="* First Name"
                
                 required
               />
               <input
                 type="text"
-                className="lastName"
+                className="input invitation-lastName"
                 placeholder="* Last Name"
                 
                 required
               />
             </div>
-            <div className="line">
-              <div className="icon">
-                <img src="../../assets/icons/arroba.png" className="img" />
+            <div className="invitation-line">
+              <div className="invitation-icon">
+                <img src={ArrobaIcon} className="invitation-img" />
               </div>
               <input
                 type="email"
-                className="email"
+                className="input invitation-email"
                 placeholder="* Email"
                 
                 required
               />
             </div>
-            <div className="line">
-              <div className="icon">
-                <img src="../../assets/icons/role_key.png" />
+            <div className="invitation-line">
+              <div className="invitation-icon">
+                <img src={KeyIcon} />
               </div>
-              <div className="dropdown">
-                <button className="dropbtn" id="dropbtn" disabled>
+              <div className="invitation-dropdown">
+                <button className="invitation-dropbtn" id="dropbtn" disabled>
                   * Role
                 </button>
-                <img src="../../assets/icons/down-arrow.png" className="arrow" />
-                <div className="dropdown-content" onClick={setRole($event)}>
+                <img src={ArrowIcon} className="invitation-arrow" />
+                <div className="invitation-dropdown-content" onClick={setRole}>
                   <a href="#">Admin</a>
                   <a href="#">User</a>
                 </div>
               </div>
-              <div className="invisible"></div>
+              <div className="invitation-invisible"></div>
             </div>
 
-            <div className="final-section">
+            <div className="invitation-final-section">
               <button
-                className="submit-btn"
-                onClick="submitInvitation"
-                disabled="validateForm() ? false : true"
+                className="invitation-submit-btn"
+                onClick={submitInvitation}
+                disabled={validateForm() ? false : true}
               >
                 Send Invitation
               </button>
               <div
-                className="info-div"
-                className="validateForm() ? 'green-text' : 'red-text'"
+                className={validateForm() ? 'invitation-info-div green-text' : 'invitation-info-div red-text'}
               >
                 {validateForm() ? "Good to go" : "Fill in all the fields"}
               </div>

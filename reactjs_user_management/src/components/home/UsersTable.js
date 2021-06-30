@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter,Link } from 'react-router-dom'
 import "../../styles/home/UsersTable.css";
 import ToggleButton from "../../shared/components/ToggleButton";
 import Arrow from "../../assets/icons/down-arrow.png";
@@ -40,12 +41,14 @@ class UsersTable extends Component {
     }
     this.sortByStatusDesc = !this.sortByStatusDesc;
   }
-  changeState(user) {
-      this.props.toggleState(user);
-  }
+ 
   navigate(user) {
       this.props.setActiveUser(user);
-    this.$router.push("/settings");
+      // const navigate=withRouter(({history})=>(
+      //   history.push("/settings")
+      // ));
+    
+    
   }
   toggleDeletionOption(user) {
       this.props.changeDeletionPopUp(user);
@@ -73,7 +76,7 @@ this.setState({filteredArray:[...newArray]});
   }
   render() {
     return (
-      <div className="wrapper">
+      <div className="table-wrapper">
         <table className="table">
           <thead>
             <tr className="table-header">
@@ -111,20 +114,21 @@ this.setState({filteredArray:[...newArray]});
               </td>
               <td>
                 <div className="td-role">
-                  <div className="admin-div">
+                  <div className="table-admin-div">
                     <img src={KeyIcon} />
                   </div>
                   <p>{this.props.user.role}</p>
                 </div>
               </td>
               <td className="td-status">
-                <div className="toggle-wrapper">
+                <div className="status-toggle-wrapper">
                   <div className="toggle-btn">
                     <ToggleButton
                       toggleChecked={
                         this.props.user.status === "active" ? true : false
                       }
-                      onClick={this.changeState(this.props.user)}
+                      toggleState={()=>this.props.toggleState()}
+                      // onClick={()=>this.props.toggleState(this.props.user)}
                     />
                   </div>
                 </div>
@@ -132,16 +136,20 @@ this.setState({filteredArray:[...newArray]});
               <td className="td-actions">
                 <div className="cont-wrapper">
                   <div className="actions">
+                    <Link to="/settings">
                     <img
                       className="settings-img"
                       src={SettingsIcon}
                       onClick={this.navigate(this.props.user)}
                     />
+                    </Link>
+                    
                     <img
                       className="recycleBin-img"
                       src={RecycleIcon}
                       onClick={this.toggleDeletionOption(this.props.user)}
                     />
+                    
                   </div>
                 </div>
               </td>

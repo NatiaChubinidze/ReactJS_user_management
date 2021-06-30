@@ -5,10 +5,10 @@ import searchIcon from '../../assets/icons/search.png';
 class HomeHeader extends Component {
   render(){
   return (
-    <div className="box">
-    <div className="header">
-      <div className="wrapper">
-        <h1 className="title">Project Access</h1>
+    <div className="header-box">
+    <div className="home-header">
+      <div className="home-header-wrapper">
+        <h1 className="header-title">Project Access</h1>
         <div id="v-model-basic">
           <input
             type="text"
