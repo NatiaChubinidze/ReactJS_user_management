@@ -2,20 +2,14 @@ import "../../styles/home/DeleteUser.css";
 import CancelIcon from '../../assets/icons/cancel.png';
 import BoyIcon from '../../assets/icons/boy.png';
 
-function DeleteUser(props) {
-    function deleteUser(user){
-        props.deleteConcreteUser(user);
-    }
-    function toggleVisibility(){
-        props.closeDeletionPopUp();
-    }
+function DeleteUser(props) { 
   return (
-    <div className="delete">
+    <div className={props.showDeletionWindow ? "delete" : 'd-none'}>
     <div className="delete-box">
       <img
         src={CancelIcon}
         className="delete-cancel"
-        onClick={toggleVisibility}
+        onClick={()=>props.toggleDeletionPopUp()}
       />
       <h3 className="delete-h3">Delete User</h3>
 
@@ -37,7 +31,7 @@ function DeleteUser(props) {
         </div>
 
         <div className="delete-final-section">
-          <button className="delete-user-btn" onClick={deleteUser}>Delete User</button>
+          <button className="delete-user-btn" onClick={()=>props.deleteConcreteUser(props.user)}>Delete User</button>
         </div>
       </div>
     </div>

@@ -14,18 +14,17 @@ class Home extends Component {
       showAddUsers:false,
       filterTerm:'',
     }
-    this.changeDeletionPopUp=this.changeDeletionPopUp.bind(this);
-    this.closeDeletionPopUp=this.closeDeletionPopUp.bind(this);
+    this.toggleDeletionPopUp=this.toggleDeletionPopUp.bind(this);
     this.changeAddUserOption=this.changeAddUserOption.bind(this);
     this.setFilterTerm=this.setFilterTerm.bind(this);
     this.deleteConcreteUser=this.deleteConcreteUser.bind(this);
+    this.toggleAddUsersVisibility=this.toggleAddUsersVisibility.bind(this);
   }
-  changeDeletionPopUp(user) {
-    // this.setState({showDeletionWindow:true});
-    // this.props.setActiveUser(user);
-  }
-  closeDeletionPopUp(showHide) {
-    this.setState({showDeletionWindow: showHide});
+
+  toggleDeletionPopUp() {
+    this.setState(prevState=>{
+      return {showDeletionWindow:!prevState.showDeletionWindow};
+    })
   }
   changeAddUserOption(showHide) {
    this.setState({showAddUsers:showHide});
@@ -33,12 +32,16 @@ class Home extends Component {
   setFilterTerm(searchTerm) {
     this.setState({filterTerm:searchTerm});
   }
- 
+
   deleteConcreteUser(user){
     this.props.deleteConcreteUser(user);
-    this.closeDeletionPopUp(false);
+    this.toggleDeletionPopUp();
   }
-  
+  toggleAddUsersVisibility(){
+    this.setState(prevState=>{
+      return {showAddUsers:!prevState.showAddUsers};
+    })
+  }
   render(){
   return (
     <div
@@ -48,16 +51,17 @@ class Home extends Component {
   >
     <div
      className={
-        this.props.showDeletionWindow || this.props.showAddUsers ? 'home-wrapper toBack' : 'home-wrapper'
+        this.state.showDeletionWindow || this.state.showAddUsers ? 'home-wrapper toBack' : 'home-wrapper'
      }
     >
-      <HomeHeader addNewUser={this.props.addNewUser} user={this.props.user}/>
-      <UsersTable users={this.props.users} user={this.props.activeUser} filterTerm={this.state.filterTerm} setActiveUser={this.props.setActiveUser} changeDeletionPopUp={this.changeDeletionPopUp} toggleState={this.props.toggleState} />
+      <HomeHeader addNewUser={this.props.addNewUser} user={this.props.user} toggleAddUsersVisibility={this.toggleAddUsersVisibility}/>
+      <UsersTable users={this.props.users} user={this.props.activeUser} filterTerm={this.state.filterTerm} setActiveUser={this.props.setActiveUser} toggleDeletionPopUp={this.toggleDeletionPopUp} setUsersArray={this.props.setUsersArray} toggleState={this.props.toggleState} />
       <Pagination/>
-      <Invitation  addNewUser={ this.props.addNewUser} activeUser={this.props.activeUser}/>
-      {/* <DeleteUser user={this.props.activeUser} deleteConcreteUser={this.props.deleteConcreteUser} closeDeletionPopUp={this.props.closeDeletionPopUp}/> */}
+      </div>
+      <Invitation addNewUser={this.props.addNewUser} activeUser={this.props.activeUser} showAddUsers={this.state.showAddUsers} toggleAddUsersVisibility={this.toggleAddUsersVisibility}/>
+      <DeleteUser user={this.props.activeUser} deleteConcreteUser={this.deleteConcreteUser} showDeletionWindow={this.state.showDeletionWindow} toggleDeletionPopUp={this.toggleDeletionPopUp}/>
     
-    </div>
+    
     </div>
   );
   }

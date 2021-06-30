@@ -29,7 +29,7 @@ function UserDetails(props) {
     </div>
     <form className="user-details-form">
       <div className="user-details-line">
-        <label for="firstName">*First Name</label>
+        <label htmlFor="firstName">*First Name</label>
         <input
           type="text"
           className="user-details-input user-details-firstName"
@@ -38,11 +38,11 @@ function UserDetails(props) {
         />
       </div>
       <div className="user-details-line">
-        <label for="lastName">*Last Name</label>
+        <label htmlFor="lastName">*Last Name</label>
         <input type="text" className="user-details-input user-details-lastName" id="lastname"/>
       </div>
       <div className="user-details-line">
-        <label for="role">*Role</label>
+        <label htmlFor="role">*Role</label>
         <div className="user-details-dropdown" id="role">
           <button className="user-details-dropbtn">{ props.user.role }</button>
           <img src={Arrow} className="user-details-arrow" />

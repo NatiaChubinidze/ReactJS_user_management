@@ -13,18 +13,18 @@ class Settings extends Component {
     return (
       <div className="settings-about">
         <SettingsHeader />
-        <div class="settings-flex-wrapper">
-          <div class="settings-userInfo">
+        <div className="settings-flex-wrapper">
+          <div className="settings-userInfo">
             <UserInfo user={this.props.activeUser} />
           </div>
-          <div class="settings-userDetails">
+          <div className="settings-userDetails">
             <UserDetails
               toggleState={this.props.toggleState}
               user={this.props.activeUser}
               modifyUserInArray={this.props.modifyUserInArray}
             />
           </div>
-          <div class="settings-userPermissions">
+          <div className="settings-userPermissions">
             <UserPermission
               user={this.props.activeUser}
               toggleState={this.props.toggleState}

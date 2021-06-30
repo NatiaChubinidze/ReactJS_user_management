@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter,Link } from 'react-router-dom'
+import { withRouter, Link } from "react-router-dom";
 import "../../styles/home/UsersTable.css";
 import ToggleButton from "../../shared/components/ToggleButton";
 import Arrow from "../../assets/icons/down-arrow.png";
@@ -15,46 +15,58 @@ class UsersTable extends Component {
       sortByUserDesc: true,
       sortByRoleDesc: true,
       sortByStatusDesc: true,
-      filteredArray:[...this.props.users]
+      filteredArray: [...this.props.users],
     };
+    this.sortByUser = this.sortByUser.bind(this);
+    this.sortByRole = this.sortByRole.bind(this);
+    this.sortByStatus = this.sortByStatus.bind(this);
+    this.setfilteredArray = this.setfilteredArray.bind(this);
+    this.filter = this.filter.bind(this);
   }
   sortByUser() {
-    this.props.users.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
-    if (!this.sortByUserDesc) {
-      this.users.reverse();
+    let clonedArray = [...this.props.users];
+    clonedArray.sort((a, b) =>
+      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    );
+    if (!this.state.sortByUserDesc) {
+      clonedArray.reverse();
     }
-    this.sortByUserDesc = !this.sortByUserDesc;
+    this.props.setUsersArray(clonedArray);
+    this.setState((prevState) => {
+      return { sortByUserDesc: !prevState.sortByUserDesc };
+    });
   }
   sortByRole() {
-    this.props.users.sort((a, b) => (a.role > b.role ? 1 : b.role > a.role ? -1 : 0));
-    if (!this.sortByRoleDesc) {
-      this.users.reverse();
+    let clonedArray = [...this.props.users];
+    clonedArray.sort((a, b) =>
+      a.role > b.role ? 1 : b.role > a.role ? -1 : 0
+    );
+    if (!this.state.sortByRoleDesc) {
+      clonedArray.reverse();
     }
-    this.sortByRoleDesc = !this.sortByRoleDesc;
+    this.props.setUsersArray(clonedArray);
+    this.setState((prevState) => {
+      return { sortByRoleDesc: !prevState.sortByRoleDesc };
+    });
   }
   sortByStatus() {
-    this.props.users.sort((a, b) =>
+    let clonedArray = [...this.props.users];
+    clonedArray.sort((a, b) =>
       a.status > b.status ? 1 : b.status > a.status ? -1 : 0
     );
-    if (!this.sortByStatusDesc) {
-      this.users.reverse();
+    if (!this.state.sortByStatusDesc) {
+      clonedArray.reverse();
     }
-    this.sortByStatusDesc = !this.sortByStatusDesc;
+    this.props.setUsersArray(clonedArray);
+    this.setState((prevState) => {
+      return { sortByStatusDesc: !prevState.sortByStatusDesc };
+    });
   }
+
  
-  navigate(user) {
-      this.props.setActiveUser(user);
-      // const navigate=withRouter(({history})=>(
-      //   history.push("/settings")
-      // ));
-    
-    
-  }
-  toggleDeletionOption(user) {
-      this.props.changeDeletionPopUp(user);
-  }
-  setfilteredArray(newArray){
-this.setState({filteredArray:[...newArray]});
+
+  setfilteredArray(newArray) {
+    this.setState({ filteredArray: [...newArray] });
   }
   filter() {
     if (this.props.filterTerm) {
@@ -68,13 +80,69 @@ this.setState({filteredArray:[...newArray]});
           user.status.toLowerCase().includes(searchTerm)
         );
       });
-     this.setFilteredArray(filteredArray);
+      this.setFilteredArray(filteredArray);
       console.log("this users", this.users);
     } else {
-        this.setFilteredArray(this.props.users);
+      this.setFilteredArray(this.props.users);
     }
   }
   render() {
+    const clonedArray=[...this.props.users];
+    const tableContent = clonedArray.map((user) => {
+      return (
+        <tr key={user.id}>
+          <td className="thumbnail">
+            <img src={UserIcon} />
+          </td>
+          <td>
+            <div className="user-info">
+              <span>{user.name}</span>
+              <p>{user.email}</p>
+            </div>
+          </td>
+          <td>
+            <div className="td-role">
+              <div className={user.role==='admin' ? "table-admin-div" : 'd-none'}>
+                <img src={KeyIcon} />
+              </div>
+              <p>{user.role}</p>
+            </div>
+          </td>
+          <td className="td-status">
+            <div className="status-toggle-wrapper">
+              <div className="toggle-btn">
+                <ToggleButton
+                  toggleChecked={user.status === "active" ? true : false}
+                  toggleState={() => this.props.toggleState()}
+                />
+              </div>
+            </div>
+          </td>
+          <td className="td-actions">
+            <div className="cont-wrapper">
+              <div className="actions">
+                <Link to="/settings">
+                  <img
+                    className="settings-img"
+                    src={SettingsIcon}
+                    onClick={()=>this.props.setActiveUser(user)}
+                  />
+                </Link>
+
+                <img
+                  className="recycleBin-img"
+                  src={RecycleIcon}
+                  onClick={() => {
+                    this.props.setActiveUser(user);
+                    this.props.toggleDeletionPopUp();
+                  }}
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+      );
+    });
     return (
       <div className="table-wrapper">
         <table className="table">
@@ -82,17 +150,17 @@ this.setState({filteredArray:[...newArray]});
             <tr className="table-header">
               <th scope="col" className="th-thumbnail"></th>
               <th scope="col" className="th-user">
-                <span onClick={this.sortByUser}>
+                <span onClick={()=>this.sortByUser()}>
                   User <img src={Arrow} />
                 </span>
               </th>
               <th scope="col" className="th-role">
-                <span onClick={this.sortByRole}>
+                <span onClick={()=>this.sortByUser()}>
                   Role <img src={Arrow} />
                 </span>
               </th>
               <th scope="col" className="th-status">
-                <span onClick={this.sortByStatus}>
+                <span onClick={()=>this.sortByUser()}>
                   Status <img src={Arrow} />
                 </span>
               </th>
@@ -101,60 +169,7 @@ this.setState({filteredArray:[...newArray]});
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td className="thumbnail">
-                <img src={UserIcon} />
-              </td>
-              <td>
-                <div className="user-info">
-                  <span>{this.props.user.name}</span>
-                  <p>{this.props.user.email}</p>
-                </div>
-              </td>
-              <td>
-                <div className="td-role">
-                  <div className="table-admin-div">
-                    <img src={KeyIcon} />
-                  </div>
-                  <p>{this.props.user.role}</p>
-                </div>
-              </td>
-              <td className="td-status">
-                <div className="status-toggle-wrapper">
-                  <div className="toggle-btn">
-                    <ToggleButton
-                      toggleChecked={
-                        this.props.user.status === "active" ? true : false
-                      }
-                      toggleState={()=>this.props.toggleState()}
-                      // onClick={()=>this.props.toggleState(this.props.user)}
-                    />
-                  </div>
-                </div>
-              </td>
-              <td className="td-actions">
-                <div className="cont-wrapper">
-                  <div className="actions">
-                    <Link to="/settings">
-                    <img
-                      className="settings-img"
-                      src={SettingsIcon}
-                      onClick={this.navigate(this.props.user)}
-                    />
-                    </Link>
-                    
-                    <img
-                      className="recycleBin-img"
-                      src={RecycleIcon}
-                      onClick={this.toggleDeletionOption(this.props.user)}
-                    />
-                    
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tbody>{tableContent}</tbody>
         </table>
       </div>
     );

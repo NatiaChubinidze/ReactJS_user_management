@@ -18,10 +18,11 @@ class App extends Component {
     this.deleteConcreteUser = this.deleteConcreteUser.bind(this);
     this.toggleState = this.toggleState.bind(this);
     this.modifyUserInArray=this.modifyUserInArray.bind(this);
+    this.setUsersArray=this.setUsersArray.bind(this);
   }
 
   setActiveUser(user) {
-    // this.setState({ activeUser: user });
+    this.setState({ activeUser: user });
   }
 
   addNewUser(newUser) {
@@ -32,15 +33,9 @@ class App extends Component {
   }
 
   deleteConcreteUser(userToDelete) {
-    this.setState((prevState) => {
-      const mappedUsers = prevState.users.map((user) => {
-        if (user.id === userToDelete.id) {
-          return;
-        }
-        return { ...user };
-      });
-      return { users: mappedUsers };
-    });
+    const clonedArray=[...this.state.users];
+    const newArray=clonedArray.filter(user=>user.id!==userToDelete.id);
+    this.setState({users:newArray});
   }
 
   toggleState(selectedUser) {
@@ -57,9 +52,9 @@ class App extends Component {
     // console.log("updated users array", this.state.users);
   }
 
-  // setUsersArray(newArray){
-  //   this.setState({users:[...newArray]});
-  // }
+  setUsersArray(newArray){
+    this.setState({users:[...newArray]});
+  }
 
   modifyUserInArray(newUser){
     // this.setState(prevState=>{
@@ -73,10 +68,11 @@ class App extends Component {
     // })
     
   }
+  
   render() {
     return (
       <Router>
-        <Route exact path="/" render={(props) => <Home users={this.state.users} deleteConcreteUser={this.deleteConcreteUser} toggleState={this.toggleState} addNewUser={this.addNewUser} setActiveUser={this.setActiveUser} activeUser={this.state.activeUser}{...props} />}   />
+        <Route exact path="/" render={(props) => <Home users={this.state.users} setUsersArray={this.setUsersArray} deleteConcreteUser={this.deleteConcreteUser} toggleState={this.toggleState} addNewUser={this.addNewUser} setActiveUser={this.setActiveUser} activeUser={this.state.activeUser}{...props} />}   />
 
         <Route path="/settings" render={(props) => <Settings toggleState={this.toggleState} modifyUserInArray={this.modifyUserInArray} activeUser={this.state.activeUser}{...props} />} />
       </Router>

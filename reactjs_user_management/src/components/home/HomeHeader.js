@@ -20,7 +20,7 @@ class HomeHeader extends Component {
         </div>
       </div>
     </div>
-    <div className="plus" onClick={()=>this.props.addNewUser()}>+</div>
+    <div className="plus" onClick={()=>this.props.toggleAddUsersVisibility()}>+</div>
   </div>
   )
   }
