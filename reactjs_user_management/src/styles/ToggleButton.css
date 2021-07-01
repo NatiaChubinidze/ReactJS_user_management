@@ -40,6 +40,6 @@ input:checked + .toggle-slider {
   background-color: #b1d4e7;
 }
 input:checked + .toggle-slider:before {
-  transform: translateX(30px);
+  transform: translateX(25px);
   background-color: #44a0d3;
 }

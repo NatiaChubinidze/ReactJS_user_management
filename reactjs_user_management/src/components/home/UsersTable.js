@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/home/UsersTable.css";
 import ToggleButton from "../../shared/components/ToggleButton";
 import Arrow from "../../assets/icons/down-arrow.png";
+import GrayArrow from "../../assets/icons/gray_arrow.png";
 import UserIcon from "../../assets/icons/user.png";
-import KeyIcon from "../../assets/icons//key.png";
+import DisabledUser from "../../assets/icons/user_disabled.png";
+import KeyIcon from "../../assets/icons/key.png";
+import DisabledKey from "../../assets/icons/key_disabled.png";
 import SettingsIcon from "../../assets/icons/settings.png";
 import RecycleIcon from "../../assets/icons/recycle.png";
 
@@ -12,9 +15,12 @@ class UsersTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortByUserDesc: true,
-      sortByRoleDesc: true,
-      sortByStatusDesc: true,
+      sortByUser: false,
+      sortByRole: false,
+      sortByStatus: false,
+      sortByUserAsc: true,
+      sortByRoleAsc: true,
+      sortByStatusAsc: true,
       usersArray: [...this.props.users],
     };
     this.sortByUser = this.sortByUser.bind(this);
@@ -26,37 +32,40 @@ class UsersTable extends Component {
     if (prevProps.filterTerm !== this.props.filterTerm) {
       this.filter();
     }
-    if (prevProps.users.length !== this.props.users.length) {
+    if (prevProps.users !== this.props.users) {
       this.setState({ usersArray: [...this.props.users] });
     }
+    
   }
   sortByUser() {
+    this.setState({ sortByUser: true, sortByRole: false, sortByStatus: false });
     let clonedArray = [...this.state.usersArray];
     clonedArray.sort((a, b) =>
       a.name > b.name ? 1 : b.name > a.name ? -1 : 0
     );
-    if (!this.state.sortByUserDesc) {
+    if (!this.state.sortByUserAsc) {
       clonedArray.reverse();
     }
     this.setState((prevState) => {
       return {
-        sortByUserDesc: !prevState.sortByUserDesc,
+        sortByUserAsc: !prevState.sortByUserAsc,
         usersArray: [...clonedArray],
       };
     });
     this.props.setUsersArray(clonedArray);
   }
   sortByRole() {
+    this.setState({ sortByUser: false, sortByRole: true, sortByStatus: false });
     let clonedArray = [...this.state.usersArray];
     clonedArray.sort((a, b) =>
       a.role > b.role ? 1 : b.role > a.role ? -1 : 0
     );
-    if (!this.state.sortByRoleDesc) {
+    if (!this.state.sortByRoleAsc) {
       clonedArray.reverse();
     }
     this.setState((prevState) => {
       return {
-        sortByRoleDesc: !prevState.sortByRoleDesc,
+        sortByRoleAsc: !prevState.sortByRoleAsc,
         usersArray: [...clonedArray],
       };
     });
@@ -64,17 +73,18 @@ class UsersTable extends Component {
     this.props.setUsersArray(clonedArray);
   }
   sortByStatus() {
+    this.setState({ sortByUser: false, sortByRole: false, sortByStatus: true });
     let clonedArray = [...this.state.usersArray];
     clonedArray.sort((a, b) =>
       a.status > b.status ? 1 : b.status > a.status ? -1 : 0
     );
-    if (!this.state.sortByStatusDesc) {
+    if (!this.state.sortByStatusAsc) {
       clonedArray.reverse();
     }
 
     this.setState((prevState) => {
       return {
-        sortByStatusDesc: !prevState.sortByStatusDesc,
+        sortByStatusAsc: !prevState.sortByStatusAsc,
         usersArray: [...clonedArray],
       };
     });
@@ -104,7 +114,7 @@ class UsersTable extends Component {
       return (
         <tr key={user.id}>
           <td className="thumbnail">
-            <img src={UserIcon} alt="User Icon"/>
+            <img src={user.status==="active" ? UserIcon : DisabledUser} alt="User Icon" />
           </td>
           <td>
             <div className="user-info">
@@ -115,9 +125,12 @@ class UsersTable extends Component {
           <td>
             <div className="td-role">
               <div
-                className={user.role === "admin" ? "table-admin-div" : "d-none"}
+                className={user.role === "admin" && user.status ==="active" ? "table-admin-div" : "d-none"}
               >
-                <img src={KeyIcon} alt="Key Icon"/>
+                <img src={KeyIcon} className="admin-key" alt="Key Icon" />
+              </div>
+              <div className="disabled-img">
+              <img src={DisabledKey} alt="Disabled Key" className={user.role === "admin"&&user.status!=="active"?"disabledKey" : "d-none"}/>
               </div>
               <p>{user.role}</p>
             </div>
@@ -138,7 +151,7 @@ class UsersTable extends Component {
               <div className="actions">
                 <Link to="/settings">
                   <img
-                    className="settings-img"
+                    className={user.status === "active"?"settings-img":"d-none"}
                     src={SettingsIcon}
                     alt="Settings Icon"
                     onClick={() => this.props.setActiveUser(user)}
@@ -167,22 +180,23 @@ class UsersTable extends Component {
             <tr className="table-header">
               <th scope="col" className="th-thumbnail"></th>
               <th scope="col" className="th-user">
-                <span onClick={() => this.sortByUser()}>
-                  User <img src={Arrow} alt="Arrow"/>
+                <span className={this.state.sortByUser ? "active-cell":null} onClick={() => this.sortByUser()}>
+                  User{" "}
+                  <img src={this.state.sortByUser ? Arrow : GrayArrow} alt="Arrow" className="sort-arrow"/>
                 </span>
               </th>
               <th scope="col" className="th-role">
-                <span onClick={() => this.sortByRole()}>
-                  Role <img src={Arrow} alt="Arrow"/>
+                <span className={this.state.sortByRole ? "active-cell":null} onClick={() => this.sortByRole()}>
+                  Role  <img src={this.state.sortByRole ? Arrow : GrayArrow} alt="Arrow" className="sort-arrow"/>
                 </span>
               </th>
               <th scope="col" className="th-status">
-                <span onClick={() => this.sortByStatus()}>
-                  Status <img src={Arrow} alt="Arrow"/>
+                <span className={this.state.sortByStatus ? "active-cell":null} onClick={() => this.sortByStatus()}>
+                  Status  <img src={this.state.sortByStatus ? Arrow : GrayArrow} alt="Arrow" className="sort-arrow"/>
                 </span>
               </th>
               <th scope="col" className="th-actions">
-                Actions
+                <span>Actions</span>
               </th>
             </tr>
           </thead>

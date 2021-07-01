@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     padding: 40px 30px;
     align-items: flex-start;
+
   }
   .user-permission-h3 {
     font: normal normal 600 36px/48px Segoe UI;
@@ -99,10 +100,15 @@
   .user-permission-circle {
     width: 6px;
     height: 6px;
-    background-color: #44a0d3;
     border-radius: 50%;
     margin-top: 7px;
     margin-right: 10px;
+  }
+  .blue{
+    background-color: #44a0d3;
+  }
+  .red{
+    background-color: red;
   }
   .user-permission-flex-wrapper {
     display: flex;

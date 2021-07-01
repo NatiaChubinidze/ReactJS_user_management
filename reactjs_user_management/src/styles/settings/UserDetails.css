@@ -5,6 +5,7 @@
   flex-direction: column;
   padding: 40px 50px;
   align-items: flex-start;
+
 }
 .user-details-h3 {
   font: normal normal 600 36px/48px Segoe UI;
@@ -28,6 +29,7 @@
 }
 .user-details-flex-box p span {
   font-weight: bold;
+  margin-left:3px;
 }
 .user-details-toggleButton {
   width: 80px;

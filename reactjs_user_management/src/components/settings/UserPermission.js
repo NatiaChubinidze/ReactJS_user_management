@@ -235,7 +235,7 @@ class UserPermission extends Component {
       return (
         <div className="user-permission-flex-box" key={`${ObKey}${value}`}>
           <div className="user-permission-flex-wrapper">
-            <div className="user-permission-circle"></div>
+            <div className={value==="true"?"user-permission-circle blue":"user-permission-circle red"}></div>
             <p className="user-permission-p">{ObKey}</p>
           </div>
           <div
@@ -257,7 +257,7 @@ class UserPermission extends Component {
       return (
         <div className="user-permission-flex-box" key={`${ObKey}${value}`}>
           <div className="user-permission-flex-wrapper">
-            <div className="user-permission-circle"></div>
+            <div className={value==="true"?"user-permission-circle blue":"user-permission-circle red"}></div>
             <p className="user-permission-p">{ObKey}</p>
           </div>
           <div
@@ -279,7 +279,7 @@ class UserPermission extends Component {
       return (
         <div className="user-permission-flex-box" key={`${ObKey}${value}`}>
           <div className="user-permission-flex-wrapper">
-            <div className="user-permission-circle"></div>
+            <div className={value==="true"?"user-permission-circle blue":"user-permission-circle red"}></div>
             <p className="user-permission-p">{ObKey}</p>
           </div>
           <div
