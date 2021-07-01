@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "../styles/App.css";
-import {USERS} from '../shared/data';
+import { USERS } from "../shared/data";
 import Home from "../components/home/Home";
 import Settings from "../components/settings/Settings";
 
@@ -17,9 +17,9 @@ class App extends Component {
     this.addNewUser = this.addNewUser.bind(this);
     this.deleteConcreteUser = this.deleteConcreteUser.bind(this);
     this.toggleState = this.toggleState.bind(this);
-    this.modifyUserInArray=this.modifyUserInArray.bind(this);
-    this.setUsersArray=this.setUsersArray.bind(this);
-    this.updateActiveUserInfo=this.updateActiveUserInfo.bind(this);
+    this.modifyUserInArray = this.modifyUserInArray.bind(this);
+    this.setUsersArray = this.setUsersArray.bind(this);
+    this.updateActiveUserInfo = this.updateActiveUserInfo.bind(this);
   }
 
   setActiveUser(user) {
@@ -30,13 +30,15 @@ class App extends Component {
     console.log("adding new user to the database...");
     let clonedUsers = [...this.state.users];
     clonedUsers.unshift(newUser);
-    this.setState({ users: [...clonedUsers] });
+    // this.setState({ users: [...clonedUsers] });
+    this.setUsersArray(clonedUsers);
   }
 
   deleteConcreteUser(userToDelete) {
-    const clonedArray=[...this.state.users];
-    const newArray=clonedArray.filter(user=>user.id!==userToDelete.id);
-    this.setState({users:newArray});
+    const clonedArray = [...this.state.users];
+    const newArray = clonedArray.filter((user) => user.id !== userToDelete.id);
+    // this.setState({ users: newArray });
+    this.setUsersArray(newArray);
   }
 
   toggleState(selectedUser) {
@@ -48,57 +50,79 @@ class App extends Component {
         }
         return user;
       });
-      console.log("updated users",updatedUsers);
+      console.log("updated users", updatedUsers);
       return { users: updatedUsers };
-      
     });
     setTimeout(() => {
       console.log("updated users array", this.state.users);
       this.updateActiveUserInfo();
     }, 50);
-    
-    
   }
 
-  updateActiveUserInfo(){
-    if(this.state.activeUser){
+  updateActiveUserInfo() {
+    if (this.state.activeUser) {
       console.log("updating acive user");
-    this.state.users.forEach(user=>{
-      if(this.state.activeUser.id === user.id){
-        this.setState({activeUser:{...user}});
-        return;
-      }
-    })
+      this.state.users.forEach((user) => {
+        if (this.state.activeUser.id === user.id) {
+          this.setState({ activeUser: { ...user } });
+          return;
+        }
+      });
+    }
   }
-  }
-  setUsersArray(newArray){
-    this.setState({users:[...newArray]});
+  setUsersArray(newArray) {
+    this.setState({ users: [...newArray] });
   }
 
-  modifyUserInArray(newUser){
-    this.setState(prevState=>{
-      const newArray=prevState.users.map(user=>{
+  modifyUserInArray(newUser) {
+    this.setState((prevState) => {
+      const newArray = prevState.users.map((user) => {
         console.log(newUser);
-        const id=user.id;
-        if(id == newUser.id){
-          return {...newUser}
+        const id = user.id;
+        if (id == newUser.id) {
+          return { ...newUser };
         }
         return user;
-      })
-      return {users:newArray}
-    })
+      });
+      return { users: newArray };
+    });
     setTimeout(() => {
       console.log("updated users array", this.state.users);
       this.updateActiveUserInfo();
     }, 50);
   }
-  
+
   render() {
     return (
       <Router>
-        <Route exact path="/" render={(props) => <Home users={this.state.users} setUsersArray={this.setUsersArray} deleteConcreteUser={this.deleteConcreteUser} toggleState={this.toggleState} addNewUser={this.addNewUser} setActiveUser={this.setActiveUser} activeUser={this.state.activeUser}{...props} />}   />
+        <Route
+          exact
+          path="/"
+          render={(props) => (
+            <Home
+              users={this.state.users}
+              setUsersArray={this.setUsersArray}
+              deleteConcreteUser={this.deleteConcreteUser}
+              toggleState={this.toggleState}
+              addNewUser={this.addNewUser}
+              setActiveUser={this.setActiveUser}
+              activeUser={this.state.activeUser}
+              {...props}
+            />
+          )}
+        />
 
-        <Route path="/settings" render={(props) => <Settings toggleState={this.toggleState} modifyUserInArray={this.modifyUserInArray} activeUser={this.state.activeUser}{...props} />} />
+        <Route
+          path="/settings"
+          render={(props) => (
+            <Settings
+              toggleState={this.toggleState}
+              modifyUserInArray={this.modifyUserInArray}
+              activeUser={this.state.activeUser}
+              {...props}
+            />
+          )}
+        />
       </Router>
     );
   }

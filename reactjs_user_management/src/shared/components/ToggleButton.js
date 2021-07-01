@@ -1,5 +1,4 @@
 import '../../styles/ToggleButton.css';
-import {useEffect} from 'react';
 
 function ToggleButton(props) {
   
