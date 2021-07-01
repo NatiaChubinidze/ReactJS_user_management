@@ -29,6 +29,7 @@ class Settings extends Component {
               user={this.props.activeUser}
               toggleState={this.props.toggleState}
               modifyUserInArray={this.props.modifyUserInArray}
+              user={this.props.activeUser}
             />
           </div>
         </div>

@@ -15,17 +15,33 @@ class UserPermission extends Component {
       permission_group_3: true,
       superAdmin: false,
     };
+    this.togglePermissionOne = this.togglePermissionOne.bind(this);
+    this.togglePermissionTwo = this.togglePermissionTwo.bind(this);
+    this.togglePermissionThree = this.togglePermissionThree.bind(this);
+    this.toggleSuperAdmin = this.toggleSuperAdmin.bind(this);
+    this.toggleGroupPermission = this.toggleGroupPermission.bind(this);
+    this.togglePermissions = this.togglePermissions.bind(this);
+    this.setSuperAdmin = this.setSuperAdmin.bind(this);
+    this.setPermissionGroupStatus = this.setPermissionGroupStatus.bind(this);
+    this.setPermissions = this.setPermissions.bind(this);
+
     this.setPermissionGroupStatus();
     this.setSuperAdmin();
   }
   togglePermissionOne() {
-    this.permission_1_visibility = !this.permission_1_visibility;
+    this.setState((prevState) => {
+      return { permission_1_visibility: !prevState.permission_1_visibility };
+    });
   }
   togglePermissionTwo() {
-    this.permission_2_visibility = !this.permission_2_visibility;
+    this.setState((prevState) => {
+      return { permission_2_visibility: !prevState.permission_2_visibility };
+    });
   }
   togglePermissionThree() {
-    this.permission_3_visibility = !this.permission_3_visibility;
+    this.setState((prevState) => {
+      return { permission_3_visibility: !prevState.permission_3_visibility };
+    });
   }
   toggleSuperAdmin() {
     this.setState((prevState) => {
@@ -46,8 +62,8 @@ class UserPermission extends Component {
         permission_group_3: false,
       });
     }
-    this.setPermissions(this.props.user);
-    this.props.modifyUserInArray();
+    this.setPermissions();
+    this.props.modifyUserInArray(this.props.user);
   }
   toggleGroupPermission(group) {
     switch (group) {
@@ -55,7 +71,7 @@ class UserPermission extends Component {
         //   this.setState(prevState=>{
         //       return {permission_group_1:!prevState.permission_group_1}
         //   })
-        
+
         this.setPermissions();
         this.setSuperAdmin();
         return;
@@ -63,7 +79,7 @@ class UserPermission extends Component {
       case "group_2":
         // this.setState(prevState=>{
         //     return {permission_group_2:!prevState.permission_group_2}
-        // })       
+        // })
         this.setPermissions();
         this.setSuperAdmin();
         return;
@@ -76,17 +92,25 @@ class UserPermission extends Component {
         return;
     }
     this.setSuperAdmin();
-    this.props.modifyUserInArray();
+    this.props.modifyUserInArray(this.props.user);
   }
   togglePermissions(permissionName, permission_group) {
-    // if (this.props.user[permission_group][permissionName] == "true") {
-    //   this.props.user[permission_group][permissionName] = "false";
-    // } else {
-    //   this.props.user[permission_group][permissionName] = "true";
-    // }
+    let newPermissionUser = {};
+    if (this.props.user[permission_group][permissionName] == "true") {
+      newPermissionUser = {
+        ...this.props.user,
+        permission_group: { ...permission_group, permissionName: "false" },
+      };
+      console.log(newPermissionUser);
+    } else {
+      newPermissionUser = {
+        ...this.props.user,
+        permission_group: { ...permission_group, permissionName: "true" },
+      };
+    }
     this.setPermissionGroupStatus();
     this.setSuperAdmin();
-    this.props.modifyUserInArray();
+    // this.props.modifyUserInArray(this.props.user);
   }
   setSuperAdmin() {
     if (
@@ -94,9 +118,9 @@ class UserPermission extends Component {
       this.state.permission_group_2 &&
       this.state.permission_group_3
     ) {
-    //   this.setState({ superAdmin: true });
+      //   this.setState({ superAdmin: true });
     } else {
-    //   this.setState({ superAdmin: false });
+      //   this.setState({ superAdmin: false });
     }
   }
   setPermissionGroupStatus() {
@@ -109,173 +133,233 @@ class UserPermission extends Component {
 
     for (const item in this.props.user.per_group_1) {
       if (this.props.user.per_group_1[item] == "false") {
-        this.setState({ permission_group_1: false });
+        // this.setState({ permission_group_1: false });
       }
     }
 
     for (const item in this.props.user.per_group_2) {
       if (this.props.user.per_group_2[item] == "false") {
-        this.setState({ permission_group_2: false });
+        // this.setState({ permission_group_2: false });
       }
     }
 
     for (const item in this.props.user.per_group_3) {
       if (this.props.user.per_group_3[item] == "false") {
-        this.setState({ permission_group_3: false });
+        // this.setState({ permission_group_3: false });
       }
     }
   }
   setPermissions() {
     console.log("set permissions");
+    let clonedActiveUser = { ...this.props.user };
     if (this.state.permission_group_1 == true) {
-      for (const item in this.props.user.per_group_1) {
+      for (const item in clonedActiveUser.per_group_1) {
         /////////////////////////////
-        this.props.user.per_group_1[item] = "true";
+        clonedActiveUser.per_group_1[item] = "true";
       }
     } else {
-      for (const item in this.props.user.per_group_1) {
+      for (const item in clonedActiveUser.per_group_1) {
         //////////////////////////////
-        this.props.user.per_group_1[item] = "false";
+        clonedActiveUser.per_group_1[item] = "false";
       }
     }
     if (this.state.permission_group_2 == true) {
-      for (const item in this.props.user.per_group_2) {
+      for (const item in clonedActiveUser.per_group_2) {
         /////////
-        this.props.user.per_group_2[item] = "true";
+        clonedActiveUser.per_group_2[item] = "true";
       }
     } else {
-      for (const item in this.props.user.per_group_2) {
+      for (const item in clonedActiveUser.per_group_2) {
         //////////
-        this.props.user.per_group_2[item] = "false";
+        clonedActiveUser.per_group_2[item] = "false";
       }
     }
     if (this.state.permission_group_3 == true) {
-      for (const item in this.props.user.per_group_3) {
+      for (const item in clonedActiveUser.per_group_3) {
         ///////////////
-        this.props.user.per_group_3[item] = "true";
+        clonedActiveUser.per_group_3[item] = "true";
       }
     } else {
-      for (const item in this.state.user.per_group_3) {
+      for (const item in clonedActiveUser.per_group_3) {
         ///////////////
-        this.state.user.per_group_3[item] = "false";
+        clonedActiveUser.per_group_3[item] = "false";
       }
     }
+    // this.props.modifyUserInArray(clonedActiveUser);
   }
 
   render() {
-    return (
-      <div className="user-permission-wrapper">
-        <h3 className="user-permission-h3">Permissions</h3>
-        <span className="user-permission-role-title">{this.props.user.role}</span>
-        <div className="user-permission-super-admin">
-          <p className="user-permission-p">Super Admin</p>
-          <div className="user-permission-toggleBtn">
+    const mappedPermissionGroup_1 = Object.entries(
+      this.props.user.per_group_1
+    ).map(([ObKey, value]) => {
+      return (
+        <div className="user-permission-flex-box" key={`${ObKey}${value}`}>
+          <div className="user-permission-flex-wrapper">
+            <div className="user-permission-circle"></div>
+            <p className="user-permission-p">{ObKey}</p>
+          </div>
+          <div
+            className="user-permission-toggleBtn"
+            onClick={this.togglePermissions(ObKey, "per_group_1")}
+          >
             <ToggleButton
-              toggleChecked={this.state.superAdmin == true ? true : false}
-              onClick={this.toggleSuperAdmin}
+              toggleChecked={value == "true" ? true : false}
+              toggleState={this.props.toggleState}
+              user={this.props.user}
             />
           </div>
         </div>
-        <hr className="hr"/>
+      );
+    });
+    const mappedPermissionGroup_2 = Object.entries(
+      this.props.user.per_group_2
+    ).map(([ObKey, value]) => {
+      return (
+        <div className="user-permission-flex-box" key={`${ObKey}${value}`}>
+          <div className="user-permission-flex-wrapper">
+            <div className="user-permission-circle"></div>
+            <p className="user-permission-p">{ObKey}</p>
+          </div>
+          <div
+            className="user-permission-toggleBtn"
+            onClick={this.togglePermissions(ObKey, "per_group_2")}
+          >
+            <ToggleButton
+              toggleChecked={value == "true" ? true : false}
+              toggleState={this.props.toggleState}
+              user={this.props.user}
+            />
+          </div>
+        </div>
+      );
+    });
+    const mappedPermissionGroup_3 = Object.entries(
+      this.props.user.per_group_3
+    ).map(([ObKey, value]) => {
+      return (
+        <div className="user-permission-flex-box" key={`${ObKey}${value}`}>
+          <div className="user-permission-flex-wrapper">
+            <div className="user-permission-circle"></div>
+            <p className="user-permission-p">{ObKey}</p>
+          </div>
+          <div
+            className="user-permission-toggleBtn"
+            onClick={this.togglePermissions(ObKey, "per_group_3")}
+          >
+            <ToggleButton
+              toggleChecked={value == "true" ? true : false}
+              toggleState={this.props.toggleState}
+              user={this.props.user}
+            />
+          </div>
+        </div>
+      );
+    });
+    return (
+      <div className="user-permission-wrapper">
+        <h3 className="user-permission-h3">Permissions</h3>
+        <span className="user-permission-role-title">
+          {this.props.user.role}
+        </span>
+        <div className="user-permission-super-admin">
+          <p className="user-permission-p">Super Admin</p>
+          <div
+            className="user-permission-toggleBtn"
+            onClick={this.toggleSuperAdmin}
+          >
+            <ToggleButton
+              toggleChecked={this.state.superAdmin == true ? true : false}
+              toggleState={this.props.toggleState}
+              user={this.props.user}
+            />
+          </div>
+        </div>
+        <hr className="hr" />
 
         <div className="user-permission-permission_group">
           <div className="user-permission-title-line">
             <img className="user-permission-img" src={Arrow} />
             <div className="user-permission-permission-title">
-              <button className="user-permission-dropbtn" onClick={this.togglePermissionOne}>
+              <button
+                className="user-permission-dropbtn"
+                onClick={()=>this.togglePermissionOne()}
+              >
                 Permission Group 1
               </button>
             </div>
-            <div className="user-permission-toggleBtn">
+            <div
+              className="user-permission-toggleBtn"
+              onClick={this.toggleGroupPermission("group_1")}
+            >
               <ToggleButton
                 toggleChecked={this.state.permission_group_1 ? true : false}
-                onClick={this.toggleGroupPermission("group_1")}
+                toggleState={this.props.toggleState}
+                user={this.props.user}
               />
             </div>
           </div>
-          <div className="user-permission-dropdown-content">
-            <div
-              className="user-permission-flex-box"
-              //   v-for="(value, name) in user.per_group_1"
-              //   :key="value"
-            >
-              <div className="user-permission-flex-wrapper">
-                <div className="user-permission-circle"></div>
-                <p className="user-permission-p">{"name"}</p>
-              </div>
-              <div className="user-permission-toggleBtn">
-                <ToggleButton
-                  toggleChecked={"value" == "true" ? true : false}
-                  onClick={this.togglePermissions("name", "per_group_1")}
-                />
-              </div>
-            </div>
+          <div className={this.state.permission_1_visibility ? "user-permission-dropdown-content" : "d-none"}>
+            {mappedPermissionGroup_1}
           </div>
         </div>
 
-        <hr className="hr"/>
+        <hr className="hr" />
         <div className="user-permission-permission_group">
           <div className="user-permission-title-line">
             <img className="user-permission-img" src={Arrow} />
             <div className="user-permission-permission-title">
-              <button className="user-permission-dropbtn" onClick={this.togglePermissionTwo}>
+              <button
+                className="user-permission-dropbtn"
+                onClick={()=>this.togglePermissionTwo()}
+              >
                 Permission Group 2
               </button>
             </div>
-            <div className="user-permission-toggleBtn">
+            <div
+              className="user-permission-toggleBtn"
+              onClick={this.toggleGroupPermission("group_2")}
+            >
               <ToggleButton
-                toggleChecked={this.state.permission_group_2 === true ? true : false}
-                onClick={this.toggleGroupPermission("group_2")}
+                toggleChecked={
+                  this.state.permission_group_2 === true ? true : false
+                }
+                toggleState={this.props.toggleState}
+                user={this.props.user}
               />
             </div>
           </div>
-          <div className="user-permission-dropdown-content">
-            <div className="user-permission-flex-box">
-              <div className="user-permission-flex-wrapper">
-                <div className="user-permission-circle"></div>
-                <p className="user-permission-p">{"name"}</p>
-              </div>
-              <div className="user-permission-toggleBtn">
-                <ToggleButton
-                  toggleChecked={"value" == "true" ? true : false}
-                  onClick={this.togglePermissions("name", "per_group_2")}
-                />
-              </div>
-            </div>
+          <div className={this.state.permission_2_visibility ? "user-permission-dropdown-content" : "d-none"}>
+            {mappedPermissionGroup_2}
           </div>
         </div>
-        <hr className="hr"/>
+        <hr className="hr" />
         <div className="user-permission-permission_group">
           <div className="user-permission-title-line">
             <img className="user-permission-img" src={Arrow} />
             <div className="user-permission-permission-title">
-              <button className="user-permission-dropbtn" onClick={this.togglePermissionThree}>
+              <button
+                className="user-permission-dropbtn"
+                onClick={()=>this.togglePermissionThree()}
+              >
                 Permission Group 3
               </button>
             </div>
-            <div className="user-permission-toggleBtn">
+            <div
+              className="user-permission-toggleBtn"
+              onClick={this.toggleGroupPermission("group_3")}
+            >
               <ToggleButton
                 toggleChecked={this.state.permission_group_3 ? true : false}
-                onClick={this.toggleGroupPermission("group_3")}
+                toggleState={this.props.toggleState}
+                user={this.props.user}
               />
             </div>
           </div>
-          <div className="user-permission-dropdown-content">
-            <div className="user-permission-flex-box">
-              <div className="user-permission-flex-wrapper">
-                <div className="user-permission-circle"></div>
-                <p className="user-permission-p">{"name"}</p>
-              </div>
-              <div className="user-permission-toggleBtn">
-                <ToggleButton
-                  toggleChecked={"value" == "true" ? true : false}
-                  onClick={this.togglePermissions("name", "per_group_13")}
-                />
-              </div>
-            </div>
+          <div className={this.state.permission_3_visibility ? "user-permission-dropdown-content" : "d-none"}>
+            {mappedPermissionGroup_3}
           </div>
         </div>
-        <hr className="hr"/>
+        <hr className="hr" />
       </div>
     );
   }

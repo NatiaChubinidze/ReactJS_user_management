@@ -15,16 +15,17 @@ class UsersTable extends Component {
       sortByUserDesc: true,
       sortByRoleDesc: true,
       sortByStatusDesc: true,
-      filteredArray: [...this.props.users],
+      usersClone: [...this.props.users],
     };
     this.sortByUser = this.sortByUser.bind(this);
     this.sortByRole = this.sortByRole.bind(this);
     this.sortByStatus = this.sortByStatus.bind(this);
-    this.setfilteredArray = this.setfilteredArray.bind(this);
+    this.setFilteredArray = this.setFilteredArray.bind(this);
     this.filter = this.filter.bind(this);
   }
   sortByUser() {
     let clonedArray = [...this.props.users];
+   
     clonedArray.sort((a, b) =>
       a.name > b.name ? 1 : b.name > a.name ? -1 : 0
     );
@@ -32,22 +33,27 @@ class UsersTable extends Component {
       clonedArray.reverse();
     }
     this.props.setUsersArray(clonedArray);
+    // this.setFilteredArray(clonedArray);
     this.setState((prevState) => {
       return { sortByUserDesc: !prevState.sortByUserDesc };
     });
+    console.log(clonedArray);
   }
   sortByRole() {
     let clonedArray = [...this.props.users];
     clonedArray.sort((a, b) =>
       a.role > b.role ? 1 : b.role > a.role ? -1 : 0
     );
+    console.log(clonedArray);
     if (!this.state.sortByRoleDesc) {
       clonedArray.reverse();
     }
     this.props.setUsersArray(clonedArray);
+    // this.setFilteredArray(clonedArray);
     this.setState((prevState) => {
       return { sortByRoleDesc: !prevState.sortByRoleDesc };
     });
+    console.log(clonedArray);
   }
   sortByStatus() {
     let clonedArray = [...this.props.users];
@@ -55,20 +61,25 @@ class UsersTable extends Component {
       a.status > b.status ? 1 : b.status > a.status ? -1 : 0
     );
     if (!this.state.sortByStatusDesc) {
+      console.log("reverse");
       clonedArray.reverse();
     }
     this.props.setUsersArray(clonedArray);
+    // this.setFilteredArray(clonedArray);
     this.setState((prevState) => {
       return { sortByStatusDesc: !prevState.sortByStatusDesc };
     });
+    console.log(clonedArray);
   }
 
- 
 
-  setfilteredArray(newArray) {
+setFilteredArray(newArray) {
     this.setState({ filteredArray: [...newArray] });
   }
   filter() {
+    console.log("filter function");
+    console.log(this.props.filterTerm);
+   
     if (this.props.filterTerm) {
       let clonedArray = [...this.props.users];
       const searchTerm = this.props.filterTerm.toLowerCase();
@@ -80,10 +91,10 @@ class UsersTable extends Component {
           user.status.toLowerCase().includes(searchTerm)
         );
       });
-      this.setFilteredArray(filteredArray);
-      console.log("this users", this.users);
+      this.props.setUsersArray(filteredArray);
+      
     } else {
-      this.setFilteredArray(this.props.users);
+      this.props.setUsersArray(this.state.usersClone);
     }
   }
   render() {
@@ -113,7 +124,8 @@ class UsersTable extends Component {
               <div className="toggle-btn">
                 <ToggleButton
                   toggleChecked={user.status === "active" ? true : false}
-                  toggleState={() => this.props.toggleState()}
+                  toggleState={this.props.toggleState}
+                  user={user}
                 />
               </div>
             </div>

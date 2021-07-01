@@ -19,6 +19,7 @@ class App extends Component {
     this.toggleState = this.toggleState.bind(this);
     this.modifyUserInArray=this.modifyUserInArray.bind(this);
     this.setUsersArray=this.setUsersArray.bind(this);
+    this.updateActiveUserInfo=this.updateActiveUserInfo.bind(this);
   }
 
   setActiveUser(user) {
@@ -39,34 +40,57 @@ class App extends Component {
   }
 
   toggleState(selectedUser) {
-    // let newStatus = selectedUser.status === "active" ? "disabled" : "active";
-    // this.setState((prevState) => {
-    //   const updatedUsers = prevState.users.map((user) => {
-    //     if (user.id == selectedUser.id) {
-    //       return { ...user, status: newStatus };
-    //     }
-    //     return user;
-    //   });
-    //   return { users: updatedUsers };
-    // });
-    // console.log("updated users array", this.state.users);
+    let newStatus = selectedUser.status === "active" ? "disabled" : "active";
+    this.setState((prevState) => {
+      const updatedUsers = prevState.users.map((user) => {
+        if (user.id == selectedUser.id) {
+          return { ...user, status: newStatus };
+        }
+        return user;
+      });
+      console.log("updated users",updatedUsers);
+      return { users: updatedUsers };
+      
+    });
+    setTimeout(() => {
+      console.log("updated users array", this.state.users);
+      this.updateActiveUserInfo();
+    }, 50);
+    
+    
   }
 
+  updateActiveUserInfo(){
+    if(this.state.activeUser){
+      console.log("updating acive user");
+    this.state.users.forEach(user=>{
+      if(this.state.activeUser.id === user.id){
+        this.setState({activeUser:{...user}});
+        return;
+      }
+    })
+  }
+  }
   setUsersArray(newArray){
     this.setState({users:[...newArray]});
   }
 
   modifyUserInArray(newUser){
-    // this.setState(prevState=>{
-    //   const newArray=prevState.users.map(user=>{
-    //     if(user.id===newUser.id){
-    //       return {...newUser}
-    //     }
-    //     return user;
-    //   })
-    //   return {users:newArray}
-    // })
-    
+    this.setState(prevState=>{
+      const newArray=prevState.users.map(user=>{
+        console.log(newUser);
+        const id=user.id;
+        if(id == newUser.id){
+          return {...newUser}
+        }
+        return user;
+      })
+      return {users:newArray}
+    })
+    setTimeout(() => {
+      console.log("updated users array", this.state.users);
+      this.updateActiveUserInfo();
+    }, 50);
   }
   
   render() {

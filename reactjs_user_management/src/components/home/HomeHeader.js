@@ -3,6 +3,9 @@ import '../../styles/home/HomeHeader.css';
 import searchIcon from '../../assets/icons/search.png';
 
 class HomeHeader extends Component {
+  constructor(props){
+    super(props);
+  }
   render(){
   return (
     <div className="header-box">
@@ -14,7 +17,7 @@ class HomeHeader extends Component {
             type="text"
             className="search"
             placeholder="Type to filter the table"
-           
+           onChange={(e)=>this.props.setFilterTerm(e.target.value)}
           />
           <img src={searchIcon} className="search-icon" />
         </div>

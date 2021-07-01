@@ -57,6 +57,7 @@
   width: 100% !important;
   height: 100%;
   text-align: left;
+  text-transform: capitalize;
 }
 
 .user-details-dropdown {

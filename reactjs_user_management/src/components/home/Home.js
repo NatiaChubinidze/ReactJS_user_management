@@ -13,12 +13,14 @@ class Home extends Component {
       showDeletionWindow:false,
       showAddUsers:false,
       filterTerm:'',
+      usersClone:[...this.props.users]
     }
     this.toggleDeletionPopUp=this.toggleDeletionPopUp.bind(this);
     this.changeAddUserOption=this.changeAddUserOption.bind(this);
     this.setFilterTerm=this.setFilterTerm.bind(this);
     this.deleteConcreteUser=this.deleteConcreteUser.bind(this);
     this.toggleAddUsersVisibility=this.toggleAddUsersVisibility.bind(this);
+    this.filter=this.filter.bind(this);
   }
 
   toggleDeletionPopUp() {
@@ -30,9 +32,34 @@ class Home extends Component {
    this.setState({showAddUsers:showHide});
   }
   setFilterTerm(searchTerm) {
+    console.log(searchTerm);
     this.setState({filterTerm:searchTerm});
+this.filter();
   }
-
+  filter() {
+    console.log("filter function");
+    console.log(this.props.filterTerm);
+   console.log("cloned function",this.state.usersClone);
+    if (this.state.filterTerm!=='') {
+      let clonedArray = [...this.state.usersClone];
+      const searchTerm = this.state.filterTerm.toLowerCase();
+      let filteredArray = clonedArray.filter((user) => {
+        return (
+          user.name.toLowerCase().includes(searchTerm) ||
+          user.email.toLowerCase().includes(searchTerm) ||
+          user.role.toLowerCase().includes(searchTerm) ||
+          user.status.toLowerCase().includes(searchTerm)
+        );
+      });
+      this.props.setUsersArray(filteredArray);
+      console.log("filtered array assigning")
+    } else {
+      this.props.setUsersArray(this.state.usersClone);
+      console.log("cloned array assign");
+    }
+   
+    
+  }
   deleteConcreteUser(user){
     this.props.deleteConcreteUser(user);
     this.toggleDeletionPopUp();
@@ -54,7 +81,7 @@ class Home extends Component {
         this.state.showDeletionWindow || this.state.showAddUsers ? 'home-wrapper toBack' : 'home-wrapper'
      }
     >
-      <HomeHeader addNewUser={this.props.addNewUser} user={this.props.user} toggleAddUsersVisibility={this.toggleAddUsersVisibility}/>
+      <HomeHeader addNewUser={this.props.addNewUser} user={this.props.user} toggleAddUsersVisibility={this.toggleAddUsersVisibility} setFilterTerm={this.setFilterTerm}/>
       <UsersTable users={this.props.users} user={this.props.activeUser} filterTerm={this.state.filterTerm} setActiveUser={this.props.setActiveUser} toggleDeletionPopUp={this.toggleDeletionPopUp} setUsersArray={this.props.setUsersArray} toggleState={this.props.toggleState} />
       <Pagination/>
       </div>
