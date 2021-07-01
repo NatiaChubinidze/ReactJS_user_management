@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 import "../../styles/home/UsersTable.css";
 import ToggleButton from "../../shared/components/ToggleButton";
 import Arrow from "../../assets/icons/down-arrow.png";
@@ -104,7 +104,7 @@ class UsersTable extends Component {
       return (
         <tr key={user.id}>
           <td className="thumbnail">
-            <img src={UserIcon} />
+            <img src={UserIcon} alt="User Icon"/>
           </td>
           <td>
             <div className="user-info">
@@ -117,7 +117,7 @@ class UsersTable extends Component {
               <div
                 className={user.role === "admin" ? "table-admin-div" : "d-none"}
               >
-                <img src={KeyIcon} />
+                <img src={KeyIcon} alt="Key Icon"/>
               </div>
               <p>{user.role}</p>
             </div>
@@ -140,6 +140,7 @@ class UsersTable extends Component {
                   <img
                     className="settings-img"
                     src={SettingsIcon}
+                    alt="Settings Icon"
                     onClick={() => this.props.setActiveUser(user)}
                   />
                 </Link>
@@ -147,6 +148,7 @@ class UsersTable extends Component {
                 <img
                   className="recycleBin-img"
                   src={RecycleIcon}
+                  alt="Recycle Bin"
                   onClick={() => {
                     this.props.setActiveUser(user);
                     this.props.toggleDeletionPopUp();
@@ -166,17 +168,17 @@ class UsersTable extends Component {
               <th scope="col" className="th-thumbnail"></th>
               <th scope="col" className="th-user">
                 <span onClick={() => this.sortByUser()}>
-                  User <img src={Arrow} />
+                  User <img src={Arrow} alt="Arrow"/>
                 </span>
               </th>
               <th scope="col" className="th-role">
                 <span onClick={() => this.sortByRole()}>
-                  Role <img src={Arrow} />
+                  Role <img src={Arrow} alt="Arrow"/>
                 </span>
               </th>
               <th scope="col" className="th-status">
                 <span onClick={() => this.sortByStatus()}>
-                  Status <img src={Arrow} />
+                  Status <img src={Arrow} alt="Arrow"/>
                 </span>
               </th>
               <th scope="col" className="th-actions">

@@ -74,7 +74,7 @@ class Invitation extends Component {
     });
   }
   setRole(event) {
-    if (event.target.tagName == "A") {
+    if (event.target.tagName === "LI") {
       document.getElementById("dropbtn").innerText = event.target.innerText;
       this.setState({ role: event.target.innerText.toLowerCase() });
     };
@@ -126,6 +126,7 @@ class Invitation extends Component {
         <div className="invitation-box-invite">
           <img
             src={CancelIcon}
+            alt="Cancel Icon"
             className="invitation-cancel"
             onClick={() => this.props.toggleAddUsersVisibility()}
           />
@@ -134,7 +135,7 @@ class Invitation extends Component {
             <div className="invitation-form-wrapper">
               <div className="invitation-line">
                 <div className="invitation-icon">
-                  <img src={BoyIcon} className="invitation-img" />
+                  <img src={BoyIcon} alt="Boy Icon" className="invitation-img" />
                 </div>
                 <input
                   type="text"
@@ -153,7 +154,7 @@ class Invitation extends Component {
               </div>
               <div className="invitation-line">
                 <div className="invitation-icon">
-                  <img src={ArrobaIcon} className="invitation-img" />
+                  <img src={ArrobaIcon} alt="Email Icon"className="invitation-img" />
                 </div>
                 <input
                   type="email"
@@ -165,19 +166,19 @@ class Invitation extends Component {
               </div>
               <div className="invitation-line">
                 <div className="invitation-icon">
-                  <img src={KeyIcon} />
+                  <img src={KeyIcon} alt="Key Icon"/>
                 </div>
                 <div className="invitation-dropdown">
                   <button className="invitation-dropbtn" id="dropbtn" disabled>
                     * Role
                   </button>
-                  <img src={ArrowIcon} className="invitation-arrow" />
+                  <img src={ArrowIcon} alt="Arrow" className="invitation-arrow" />
                   <div
                     className="invitation-dropdown-content"
                     onClick={this.setRole}
                   >
-                    <a href="#">Admin</a>
-                    <a href="#">User</a>
+                    <li>Admin</li>
+                    <li>User</li>
                   </div>
                 </div>
                 <div className="invitation-invisible"></div>

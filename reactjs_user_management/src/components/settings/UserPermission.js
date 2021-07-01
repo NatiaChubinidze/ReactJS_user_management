@@ -57,7 +57,7 @@ class UserPermission extends Component {
       return { superAdmin: !prevState.superAdmin };
     });
     setTimeout(() => {
-      if (this.state.superAdmin == true) {
+      if (this.state.superAdmin === true) {
         this.setState({
           permission_group_1: true,
           permission_group_2: true,
@@ -116,13 +116,14 @@ class UserPermission extends Component {
           this.setSuperAdmin();
         }, 10);
         return;
+        default:return;
     }
   }
 
   togglePermissions(event, permissionName, permission_group) {
     event.preventDefault();
     let newPermissionUser = {};
-    if (this.props.user[permission_group][permissionName] == "true") {
+    if (this.props.user[permission_group][permissionName] === "true") {
       const newpermissionGroup = {
         ...this.props.user[permission_group],
         [permissionName]: "false",
@@ -174,21 +175,21 @@ class UserPermission extends Component {
       permission_group_3: true,
     };
     for (const item in this.props.user.per_group_1) {
-      if (this.props.user.per_group_1[item] == "false") {
+      if (this.props.user.per_group_1[item] === "false") {
         permissions.permission_group_1 = false;
         break;
       }
     }
 
     for (const item in this.props.user.per_group_2) {
-      if (this.props.user.per_group_2[item] == "false") {
+      if (this.props.user.per_group_2[item] === "false") {
         permissions.permission_group_2 = false;
         break;
       }
     }
 
     for (const item in this.props.user.per_group_3) {
-      if (this.props.user.per_group_3[item] == "false") {
+      if (this.props.user.per_group_3[item] === "false") {
         permissions.permission_group_3 = false;
         break;
       }
@@ -197,7 +198,7 @@ class UserPermission extends Component {
   }
   setPermissions() {
     let clonedActiveUser = { ...this.props.user };
-    if (this.state.permission_group_1 == true) {
+    if (this.state.permission_group_1 === true) {
       for (const item in clonedActiveUser.per_group_1) {
         clonedActiveUser.per_group_1[item] = "true";
       }
@@ -206,7 +207,7 @@ class UserPermission extends Component {
         clonedActiveUser.per_group_1[item] = "false";
       }
     }
-    if (this.state.permission_group_2 == true) {
+    if (this.state.permission_group_2 === true) {
       for (const item in clonedActiveUser.per_group_2) {
         clonedActiveUser.per_group_2[item] = "true";
       }
@@ -215,7 +216,7 @@ class UserPermission extends Component {
         clonedActiveUser.per_group_2[item] = "false";
       }
     }
-    if (this.state.permission_group_3 == true) {
+    if (this.state.permission_group_3 === true) {
       for (const item in clonedActiveUser.per_group_3) {
         clonedActiveUser.per_group_3[item] = "true";
       }
@@ -242,7 +243,7 @@ class UserPermission extends Component {
             onClick={(e) => this.togglePermissions(e, ObKey, "per_group_1")}
           >
             <ToggleButton
-              toggleChecked={value == "true" ? true : false}
+              toggleChecked={value === "true" ? true : false}
               toggleState={this.props.toggleState}
               user={this.props.user}
             />
@@ -264,7 +265,7 @@ class UserPermission extends Component {
             onClick={(e) => this.togglePermissions(e, ObKey, "per_group_2")}
           >
             <ToggleButton
-              toggleChecked={value == "true" ? true : false}
+              toggleChecked={value === "true" ? true : false}
               toggleState={this.props.toggleState}
               user={this.props.user}
             />
@@ -286,7 +287,7 @@ class UserPermission extends Component {
             onClick={(e) => this.togglePermissions(e, ObKey, "per_group_3")}
           >
             <ToggleButton
-              toggleChecked={value == "true" ? true : false}
+              toggleChecked={value === "true" ? true : false}
               toggleState={this.props.toggleState}
               user={this.props.user}
             />
@@ -307,7 +308,7 @@ class UserPermission extends Component {
             onClick={this.toggleSuperAdmin}
           >
             <ToggleButton
-              toggleChecked={this.state.superAdmin == true ? true : false}
+              toggleChecked={this.state.superAdmin === true ? true : false}
               toggleState={this.props.toggleState}
               user={this.props.user}
             />
@@ -317,7 +318,7 @@ class UserPermission extends Component {
 
         <div className="user-permission-permission_group">
           <div className="user-permission-title-line">
-            <img className="user-permission-img" src={Arrow} />
+            <img className="user-permission-img" src={Arrow} alt="Arrow"/>
             <div className="user-permission-permission-title">
               <button
                 className="user-permission-dropbtn"
@@ -351,7 +352,7 @@ class UserPermission extends Component {
         <hr className="hr" />
         <div className="user-permission-permission_group">
           <div className="user-permission-title-line">
-            <img className="user-permission-img" src={Arrow} />
+            <img className="user-permission-img" src={Arrow} alt="Arrow"/>
             <div className="user-permission-permission-title">
               <button
                 className="user-permission-dropbtn"
@@ -386,7 +387,7 @@ class UserPermission extends Component {
         <hr className="hr" />
         <div className="user-permission-permission_group">
           <div className="user-permission-title-line">
-            <img className="user-permission-img" src={Arrow} />
+            <img className="user-permission-img" src={Arrow} alt="Arrow"/>
             <div className="user-permission-permission-title">
               <button
                 className="user-permission-dropbtn"

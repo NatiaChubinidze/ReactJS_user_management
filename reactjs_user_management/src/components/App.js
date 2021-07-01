@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route} from "react-router-dom";
 
 import "../styles/App.css";
 import { USERS } from "../shared/data";
@@ -42,7 +42,7 @@ class App extends Component {
     let newStatus = selectedUser.status === "active" ? "disabled" : "active";
     this.setState((prevState) => {
       const updatedUsers = prevState.users.map((user) => {
-        if (user.id == selectedUser.id) {
+        if (user.id === selectedUser.id) {
           return { ...user, status: newStatus };
         }
         return user;
@@ -72,7 +72,7 @@ class App extends Component {
     this.setState((prevState) => {
       const newArray = prevState.users.map((user) => {
         const id = user.id;
-        if (id == newUser.id) {
+        if (id === newUser.id) {
           return { ...newUser };
         }
         return user;

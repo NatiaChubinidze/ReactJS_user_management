@@ -6,9 +6,9 @@ function UserInfo(props) {
   return (
     <div className="user-info-wrapper">
     <div className="user-info-box">
-      <img src={profilePic} className="user-info-profile-pic" />
+      <img src={profilePic} alt="Profile" className="user-info-profile-pic" />
       <div className="user-info-admin-div">
-        <img src={key} />
+        <img src={key} alt="Key"/>
       </div>
     </div>
     <span>Upload a Photo</span>

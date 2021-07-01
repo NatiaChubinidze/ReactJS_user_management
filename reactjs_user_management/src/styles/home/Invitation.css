@@ -80,7 +80,7 @@
     width: 100%;
   }
   
-  .invitation-dropdown-content a {
+  .invitation-dropdown-content li {
     padding: 8px 18px;
     text-decoration: none;
     display: block;
@@ -88,9 +88,10 @@
     color: #707070;
     font-family: "Segoe UI";
     font-weight: 300;
+    cursor:pointer;
   }
   
-  .invitation-dropdown-content a:hover {
+  .invitation-dropdown-content li:hover {
     background-color: #f1f1f1;
   }
   

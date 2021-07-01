@@ -8,22 +8,16 @@ function Pagination(props) {
         <p className="pagination-title">Records on page</p>
         <div className="pagination-dropdown">
           <button className="btn light-btn">5</button>
-          <img src={Arrow} className="pagination-arrow" />
+          <img src={Arrow} alt="Arrow" className="pagination-arrow" />
           <ul className="pagination-dropdown-menu">
-            <li>
-              <a className="dropdown-item" href="#">
-                3
-              </a>
+            <li className="dropdown-item">
+              3
             </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                5
-              </a>
+            <li className="dropdown-item">
+              5
             </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                10
-              </a>
+            <li className="dropdown-item">
+              10
             </li>
           </ul>
         </div>

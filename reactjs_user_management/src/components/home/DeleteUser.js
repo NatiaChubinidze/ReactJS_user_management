@@ -8,6 +8,7 @@ function DeleteUser(props) {
       <div className="delete-box">
         <img
           src={CancelIcon}
+          alt="Cancel Icon"
           className="delete-cancel"
           onClick={() => props.toggleDeletionPopUp()}
         />
@@ -16,7 +17,7 @@ function DeleteUser(props) {
         <div className="delete-form-wrapper">
           <div className="delete-line">
             <div className="delete-icon">
-              <img src={BoyIcon} />
+              <img src={BoyIcon} alt="Boy Icon"/>
             </div>
             <div className="delete-userInfo">
               <button className="delete-dropbtn">

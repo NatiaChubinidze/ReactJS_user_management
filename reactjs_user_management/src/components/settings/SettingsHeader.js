@@ -10,7 +10,7 @@ function SettingsHeader() {
         </div>
       </div>
       <div className="header-settings-gear">
-        <img src={settingsIcon} />
+        <img src={settingsIcon} alt="Settings Icon"/>
       </div>
     </div>
   );
