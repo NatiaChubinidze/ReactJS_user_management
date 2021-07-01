@@ -20,7 +20,6 @@ class Home extends Component {
     this.setFilterTerm = this.setFilterTerm.bind(this);
     this.deleteConcreteUser = this.deleteConcreteUser.bind(this);
     this.toggleAddUsersVisibility = this.toggleAddUsersVisibility.bind(this);
-    // this.filter = this.filter.bind(this);
   }
 
   toggleDeletionPopUp() {
@@ -32,32 +31,9 @@ class Home extends Component {
     this.setState({ showAddUsers: showHide });
   }
   setFilterTerm(searchTerm) {
-    console.log(searchTerm);
     this.setState({ filterTerm: searchTerm });
-    // this.filter();
   }
-  // filter() {
-  //   console.log("filter function");
-  //   console.log(this.props.filterTerm);
-  //   console.log("cloned function", this.state.usersClone);
-  //   if (this.state.filterTerm !== "") {
-  //     let clonedArray = [...this.state.usersClone];
-  //     const searchTerm = this.state.filterTerm.toLowerCase();
-  //     let filteredArray = clonedArray.filter((user) => {
-  //       return (
-  //         user.name.toLowerCase().includes(searchTerm) ||
-  //         user.email.toLowerCase().includes(searchTerm) ||
-  //         user.role.toLowerCase().includes(searchTerm) ||
-  //         user.status.toLowerCase().includes(searchTerm)
-  //       );
-  //     });
-  //     this.props.setUsersArray(filteredArray);
-  //     console.log("filtered array assigning");
-  //   } else {
-  //     this.props.setUsersArray(this.state.usersClone);
-  //     console.log("cloned array assign");
-  //   }
-  // }
+
   deleteConcreteUser(user) {
     this.props.deleteConcreteUser(user);
     this.toggleDeletionPopUp();

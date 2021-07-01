@@ -22,18 +22,16 @@ class UsersTable extends Component {
     this.sortByStatus = this.sortByStatus.bind(this);
     this.filter = this.filter.bind(this);
   }
- componentDidUpdate(prevProps){
-   if(prevProps.filterTerm!==this.props.filterTerm){
-     this.filter();
-   }
-   
-   if(prevProps.users.length!==this.props.users.length){
-    this.setState({usersArray:[...this.props.users]});
-   }
- }
+  componentDidUpdate(prevProps) {
+    if (prevProps.filterTerm !== this.props.filterTerm) {
+      this.filter();
+    }
+    if (prevProps.users.length !== this.props.users.length) {
+      this.setState({ usersArray: [...this.props.users] });
+    }
+  }
   sortByUser() {
     let clonedArray = [...this.state.usersArray];
-   
     clonedArray.sort((a, b) =>
       a.name > b.name ? 1 : b.name > a.name ? -1 : 0
     );
@@ -41,13 +39,14 @@ class UsersTable extends Component {
       clonedArray.reverse();
     }
     this.setState((prevState) => {
-      return { sortByUserDesc: !prevState.sortByUserDesc,
-        usersArray:[...clonedArray] };
+      return {
+        sortByUserDesc: !prevState.sortByUserDesc,
+        usersArray: [...clonedArray],
+      };
     });
     this.props.setUsersArray(clonedArray);
   }
   sortByRole() {
-    console.log('sorting');
     let clonedArray = [...this.state.usersArray];
     clonedArray.sort((a, b) =>
       a.role > b.role ? 1 : b.role > a.role ? -1 : 0
@@ -55,12 +54,13 @@ class UsersTable extends Component {
     if (!this.state.sortByRoleDesc) {
       clonedArray.reverse();
     }
-    
     this.setState((prevState) => {
-      return { sortByRoleDesc: !prevState.sortByRoleDesc,
-        usersArray:[...clonedArray] };
+      return {
+        sortByRoleDesc: !prevState.sortByRoleDesc,
+        usersArray: [...clonedArray],
+      };
     });
-    
+
     this.props.setUsersArray(clonedArray);
   }
   sortByStatus() {
@@ -69,22 +69,19 @@ class UsersTable extends Component {
       a.status > b.status ? 1 : b.status > a.status ? -1 : 0
     );
     if (!this.state.sortByStatusDesc) {
-      console.log("reverse");
       clonedArray.reverse();
     }
-   
+
     this.setState((prevState) => {
-      return { sortByStatusDesc: !prevState.sortByStatusDesc,
-        usersArray:[...clonedArray] };
+      return {
+        sortByStatusDesc: !prevState.sortByStatusDesc,
+        usersArray: [...clonedArray],
+      };
     });
-    console.log(clonedArray);
     this.props.setUsersArray(clonedArray);
   }
 
   filter() {
-    console.log("filter function");
-    console.log(this.props.filterTerm);
-   
     if (this.props.filterTerm) {
       let clonedArray = [...this.props.users];
       const searchTerm = this.props.filterTerm.toLowerCase();
@@ -96,16 +93,13 @@ class UsersTable extends Component {
           user.status.toLowerCase().includes(searchTerm)
         );
       });
-     
-      this.setState({usersArray:[...filteredArray]});
 
+      this.setState({ usersArray: [...filteredArray] });
     } else {
-      
-      this.setState({usersArray:[...this.props.users]});
+      this.setState({ usersArray: [...this.props.users] });
     }
   }
   render() {
-    
     const tableContent = this.state.usersArray.map((user) => {
       return (
         <tr key={user.id}>
@@ -120,7 +114,9 @@ class UsersTable extends Component {
           </td>
           <td>
             <div className="td-role">
-              <div className={user.role==='admin' ? "table-admin-div" : 'd-none'}>
+              <div
+                className={user.role === "admin" ? "table-admin-div" : "d-none"}
+              >
                 <img src={KeyIcon} />
               </div>
               <p>{user.role}</p>
@@ -144,7 +140,7 @@ class UsersTable extends Component {
                   <img
                     className="settings-img"
                     src={SettingsIcon}
-                    onClick={()=>this.props.setActiveUser(user)}
+                    onClick={() => this.props.setActiveUser(user)}
                   />
                 </Link>
 
@@ -169,17 +165,17 @@ class UsersTable extends Component {
             <tr className="table-header">
               <th scope="col" className="th-thumbnail"></th>
               <th scope="col" className="th-user">
-                <span onClick={()=>this.sortByUser()}>
+                <span onClick={() => this.sortByUser()}>
                   User <img src={Arrow} />
                 </span>
               </th>
               <th scope="col" className="th-role">
-                <span onClick={()=>this.sortByRole()}>
+                <span onClick={() => this.sortByRole()}>
                   Role <img src={Arrow} />
                 </span>
               </th>
               <th scope="col" className="th-status">
-                <span onClick={()=>this.sortByStatus()}>
+                <span onClick={() => this.sortByStatus()}>
                   Status <img src={Arrow} />
                 </span>
               </th>

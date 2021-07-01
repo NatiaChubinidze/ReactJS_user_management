@@ -33,7 +33,6 @@ class UserPermission extends Component {
       permission_group_3: permissions.permission_group_3,
     });
     setTimeout(() => {
-      console.log(this.state.permission_group_1);
       this.setSuperAdmin();
     }, 50);
   }
@@ -58,7 +57,6 @@ class UserPermission extends Component {
       return { superAdmin: !prevState.superAdmin };
     });
     setTimeout(() => {
-      console.log("toggle super admin", this.state.superAdmin);
       if (this.state.superAdmin == true) {
         this.setState({
           permission_group_1: true,
@@ -143,7 +141,6 @@ class UserPermission extends Component {
         [permission_group]: { ...newpermissionGroup },
       };
     }
-    console.log("new toggled permission user", newPermissionUser);
     this.props.modifyUserInArray(newPermissionUser);
     setTimeout(() => {
       const permissions = this.setPermissionGroupStatus();
@@ -155,7 +152,6 @@ class UserPermission extends Component {
     }, 50);
 
     setTimeout(() => {
-      console.log(this.state.permission_group_1);
       this.setSuperAdmin();
     }, 50);
   }
@@ -172,15 +168,12 @@ class UserPermission extends Component {
     }
   }
   setPermissionGroupStatus() {
-    console.log("set permission group status");
-
     let permissions = {
       permission_group_1: true,
       permission_group_2: true,
       permission_group_3: true,
     };
     for (const item in this.props.user.per_group_1) {
-      console.log(this.props.user.per_group_1[item] == "false");
       if (this.props.user.per_group_1[item] == "false") {
         permissions.permission_group_1 = false;
         break;
@@ -188,7 +181,6 @@ class UserPermission extends Component {
     }
 
     for (const item in this.props.user.per_group_2) {
-      console.log(this.props.user.per_group_1[item] == "false");
       if (this.props.user.per_group_2[item] == "false") {
         permissions.permission_group_2 = false;
         break;
@@ -204,7 +196,6 @@ class UserPermission extends Component {
     return permissions;
   }
   setPermissions() {
-    console.log("set permissions");
     let clonedActiveUser = { ...this.props.user };
     if (this.state.permission_group_1 == true) {
       for (const item in clonedActiveUser.per_group_1) {

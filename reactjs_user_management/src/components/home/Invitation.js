@@ -64,7 +64,6 @@ class Invitation extends Component {
       },
     };
 
-    console.log("add this user", userToAdd);
     this.props.addNewUser(userToAdd);
     this.props.toggleAddUsersVisibility();
     this.setState({
@@ -79,8 +78,6 @@ class Invitation extends Component {
       document.getElementById("dropbtn").innerText = event.target.innerText;
       this.setState({ role: event.target.innerText.toLowerCase() });
     };
-    const ans=this.emailIsValid();
-    console.log(ans);
   }
   validateForm() {
     if (

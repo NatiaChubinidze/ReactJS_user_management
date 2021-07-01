@@ -27,17 +27,14 @@ class App extends Component {
   }
 
   addNewUser(newUser) {
-    console.log("adding new user to the database...");
     let clonedUsers = [...this.state.users];
     clonedUsers.unshift(newUser);
-    // this.setState({ users: [...clonedUsers] });
     this.setUsersArray(clonedUsers);
   }
 
   deleteConcreteUser(userToDelete) {
     const clonedArray = [...this.state.users];
     const newArray = clonedArray.filter((user) => user.id !== userToDelete.id);
-    // this.setState({ users: newArray });
     this.setUsersArray(newArray);
   }
 
@@ -50,18 +47,15 @@ class App extends Component {
         }
         return user;
       });
-      console.log("updated users", updatedUsers);
       return { users: updatedUsers };
     });
     setTimeout(() => {
-      console.log("updated users array", this.state.users);
       this.updateActiveUserInfo();
     }, 50);
   }
 
   updateActiveUserInfo() {
     if (this.state.activeUser) {
-      console.log("updating acive user");
       this.state.users.forEach((user) => {
         if (this.state.activeUser.id === user.id) {
           this.setState({ activeUser: { ...user } });
@@ -77,7 +71,6 @@ class App extends Component {
   modifyUserInArray(newUser) {
     this.setState((prevState) => {
       const newArray = prevState.users.map((user) => {
-        console.log(newUser);
         const id = user.id;
         if (id == newUser.id) {
           return { ...newUser };
@@ -87,7 +80,6 @@ class App extends Component {
       return { users: newArray };
     });
     setTimeout(() => {
-      console.log("updated users array", this.state.users);
       this.updateActiveUserInfo();
     }, 50);
   }
