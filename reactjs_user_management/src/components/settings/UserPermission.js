@@ -24,9 +24,18 @@ class UserPermission extends Component {
     this.setSuperAdmin = this.setSuperAdmin.bind(this);
     this.setPermissionGroupStatus = this.setPermissionGroupStatus.bind(this);
     this.setPermissions = this.setPermissions.bind(this);
-
-    this.setPermissionGroupStatus();
-    this.setSuperAdmin();
+  }
+  componentDidMount() {
+    const permissions = this.setPermissionGroupStatus();
+    this.setState({
+      permission_group_1: permissions.permission_group_1,
+      permission_group_2: permissions.permission_group_2,
+      permission_group_3: permissions.permission_group_3,
+    });
+    setTimeout(() => {
+      console.log(this.state.permission_group_1);
+      this.setSuperAdmin();
+    }, 50);
   }
   togglePermissionOne() {
     this.setState((prevState) => {
@@ -43,149 +52,188 @@ class UserPermission extends Component {
       return { permission_3_visibility: !prevState.permission_3_visibility };
     });
   }
-  toggleSuperAdmin() {
+  toggleSuperAdmin(event) {
+    event.preventDefault();
     this.setState((prevState) => {
       return { superAdmin: !prevState.superAdmin };
     });
-
-    console.log("toggle super admin", this.superAdmin);
-    if (this.state.superAdmin == true) {
-      this.setState({
-        permission_group_1: true,
-        permission_group_2: true,
-        permission_group_3: true,
-      });
-    } else {
-      this.setState({
-        permission_group_1: false,
-        permission_group_2: false,
-        permission_group_3: false,
-      });
-    }
-    this.setPermissions();
-    this.props.modifyUserInArray(this.props.user);
+    setTimeout(() => {
+      console.log("toggle super admin", this.state.superAdmin);
+      if (this.state.superAdmin == true) {
+        this.setState({
+          permission_group_1: true,
+          permission_group_2: true,
+          permission_group_3: true,
+        });
+      } else {
+        this.setState({
+          permission_group_1: false,
+          permission_group_2: false,
+          permission_group_3: false,
+        });
+      }
+      const newUser = this.setPermissions();
+      this.props.modifyUserInArray(newUser);
+    }, 50);
   }
-  toggleGroupPermission(group) {
+  toggleGroupPermission(event, group) {
+    event.preventDefault();
     switch (group) {
       case "group_1":
-        //   this.setState(prevState=>{
-        //       return {permission_group_1:!prevState.permission_group_1}
-        //   })
+        this.setState((prevState) => {
+          return { permission_group_1: !prevState.permission_group_1 };
+        });
+        setTimeout(() => {
+          const newUser = this.setPermissions();
+          this.props.modifyUserInArray(newUser);
+        }, 10);
+        setTimeout(() => {
+          this.setSuperAdmin();
+        }, 10);
 
-        this.setPermissions();
-        this.setSuperAdmin();
         return;
 
       case "group_2":
-        // this.setState(prevState=>{
-        //     return {permission_group_2:!prevState.permission_group_2}
-        // })
-        this.setPermissions();
-        this.setSuperAdmin();
+        this.setState((prevState) => {
+          return { permission_group_2: !prevState.permission_group_2 };
+        });
+        setTimeout(() => {
+          const newUser = this.setPermissions();
+          this.props.modifyUserInArray(newUser);
+        }, 10);
+        setTimeout(() => {
+          this.setSuperAdmin();
+        }, 10);
         return;
+
       case "group_3":
-        // this.setState(prevState=>{
-        //     return {permission_group_3:!prevState.permission_group_3}
-        // })
-        this.setPermissions();
-        this.setSuperAdmin();
+        this.setState((prevState) => {
+          return { permission_group_3: !prevState.permission_group_3 };
+        });
+        setTimeout(() => {
+          const newUser = this.setPermissions();
+          this.props.modifyUserInArray(newUser);
+        }, 10);
+        setTimeout(() => {
+          this.setSuperAdmin();
+        }, 10);
         return;
     }
-    this.setSuperAdmin();
-    this.props.modifyUserInArray(this.props.user);
   }
-  togglePermissions(permissionName, permission_group) {
+
+  togglePermissions(event, permissionName, permission_group) {
+    event.preventDefault();
     let newPermissionUser = {};
     if (this.props.user[permission_group][permissionName] == "true") {
-      newPermissionUser = {
-        ...this.props.user,
-        permission_group: { ...permission_group, permissionName: "false" },
+      const newpermissionGroup = {
+        ...this.props.user[permission_group],
+        [permissionName]: "false",
       };
-      console.log(newPermissionUser);
-    } else {
       newPermissionUser = {
         ...this.props.user,
-        permission_group: { ...permission_group, permissionName: "true" },
+        [permission_group]: { ...newpermissionGroup },
+      };
+    } else {
+      const newpermissionGroup = {
+        ...this.props.user[permission_group],
+        [permissionName]: "true",
+      };
+      newPermissionUser = {
+        ...this.props.user,
+        [permission_group]: { ...newpermissionGroup },
       };
     }
-    this.setPermissionGroupStatus();
-    this.setSuperAdmin();
-    // this.props.modifyUserInArray(this.props.user);
+    console.log("new toggled permission user", newPermissionUser);
+    this.props.modifyUserInArray(newPermissionUser);
+    setTimeout(() => {
+      const permissions = this.setPermissionGroupStatus();
+      this.setState({
+        permission_group_1: permissions.permission_group_1,
+        permission_group_2: permissions.permission_group_2,
+        permission_group_3: permissions.permission_group_3,
+      });
+    }, 50);
+
+    setTimeout(() => {
+      console.log(this.state.permission_group_1);
+      this.setSuperAdmin();
+    }, 50);
   }
+
   setSuperAdmin() {
     if (
       this.state.permission_group_1 &&
       this.state.permission_group_2 &&
       this.state.permission_group_3
     ) {
-      //   this.setState({ superAdmin: true });
+      this.setState({ superAdmin: true });
     } else {
-      //   this.setState({ superAdmin: false });
+      this.setState({ superAdmin: false });
     }
   }
   setPermissionGroupStatus() {
     console.log("set permission group status");
-    // this.setState({
-    //   permission_group_1: true,
-    //   permission_group_2: true,
-    //   permission_group_3: true,
-    // });
 
+    let permissions = {
+      permission_group_1: true,
+      permission_group_2: true,
+      permission_group_3: true,
+    };
     for (const item in this.props.user.per_group_1) {
+      console.log(this.props.user.per_group_1[item] == "false");
       if (this.props.user.per_group_1[item] == "false") {
-        // this.setState({ permission_group_1: false });
+        permissions.permission_group_1 = false;
+        break;
       }
     }
 
     for (const item in this.props.user.per_group_2) {
+      console.log(this.props.user.per_group_1[item] == "false");
       if (this.props.user.per_group_2[item] == "false") {
-        // this.setState({ permission_group_2: false });
+        permissions.permission_group_2 = false;
+        break;
       }
     }
 
     for (const item in this.props.user.per_group_3) {
       if (this.props.user.per_group_3[item] == "false") {
-        // this.setState({ permission_group_3: false });
+        permissions.permission_group_3 = false;
+        break;
       }
     }
+    return permissions;
   }
   setPermissions() {
     console.log("set permissions");
     let clonedActiveUser = { ...this.props.user };
     if (this.state.permission_group_1 == true) {
       for (const item in clonedActiveUser.per_group_1) {
-        /////////////////////////////
         clonedActiveUser.per_group_1[item] = "true";
       }
     } else {
       for (const item in clonedActiveUser.per_group_1) {
-        //////////////////////////////
         clonedActiveUser.per_group_1[item] = "false";
       }
     }
     if (this.state.permission_group_2 == true) {
       for (const item in clonedActiveUser.per_group_2) {
-        /////////
         clonedActiveUser.per_group_2[item] = "true";
       }
     } else {
       for (const item in clonedActiveUser.per_group_2) {
-        //////////
         clonedActiveUser.per_group_2[item] = "false";
       }
     }
     if (this.state.permission_group_3 == true) {
       for (const item in clonedActiveUser.per_group_3) {
-        ///////////////
         clonedActiveUser.per_group_3[item] = "true";
       }
     } else {
       for (const item in clonedActiveUser.per_group_3) {
-        ///////////////
         clonedActiveUser.per_group_3[item] = "false";
       }
     }
-    // this.props.modifyUserInArray(clonedActiveUser);
+    return clonedActiveUser;
   }
 
   render() {
@@ -200,7 +248,7 @@ class UserPermission extends Component {
           </div>
           <div
             className="user-permission-toggleBtn"
-            onClick={this.togglePermissions(ObKey, "per_group_1")}
+            onClick={(e) => this.togglePermissions(e, ObKey, "per_group_1")}
           >
             <ToggleButton
               toggleChecked={value == "true" ? true : false}
@@ -222,7 +270,7 @@ class UserPermission extends Component {
           </div>
           <div
             className="user-permission-toggleBtn"
-            onClick={this.togglePermissions(ObKey, "per_group_2")}
+            onClick={(e) => this.togglePermissions(e, ObKey, "per_group_2")}
           >
             <ToggleButton
               toggleChecked={value == "true" ? true : false}
@@ -244,7 +292,7 @@ class UserPermission extends Component {
           </div>
           <div
             className="user-permission-toggleBtn"
-            onClick={this.togglePermissions(ObKey, "per_group_3")}
+            onClick={(e) => this.togglePermissions(e, ObKey, "per_group_3")}
           >
             <ToggleButton
               toggleChecked={value == "true" ? true : false}
@@ -282,14 +330,14 @@ class UserPermission extends Component {
             <div className="user-permission-permission-title">
               <button
                 className="user-permission-dropbtn"
-                onClick={()=>this.togglePermissionOne()}
+                onClick={() => this.togglePermissionOne()}
               >
                 Permission Group 1
               </button>
             </div>
             <div
               className="user-permission-toggleBtn"
-              onClick={this.toggleGroupPermission("group_1")}
+              onClick={(e) => this.toggleGroupPermission(e, "group_1")}
             >
               <ToggleButton
                 toggleChecked={this.state.permission_group_1 ? true : false}
@@ -298,7 +346,13 @@ class UserPermission extends Component {
               />
             </div>
           </div>
-          <div className={this.state.permission_1_visibility ? "user-permission-dropdown-content" : "d-none"}>
+          <div
+            className={
+              this.state.permission_1_visibility
+                ? "user-permission-dropdown-content"
+                : "d-none"
+            }
+          >
             {mappedPermissionGroup_1}
           </div>
         </div>
@@ -310,14 +364,14 @@ class UserPermission extends Component {
             <div className="user-permission-permission-title">
               <button
                 className="user-permission-dropbtn"
-                onClick={()=>this.togglePermissionTwo()}
+                onClick={() => this.togglePermissionTwo()}
               >
                 Permission Group 2
               </button>
             </div>
             <div
               className="user-permission-toggleBtn"
-              onClick={this.toggleGroupPermission("group_2")}
+              onClick={(e) => this.toggleGroupPermission(e, "group_2")}
             >
               <ToggleButton
                 toggleChecked={
@@ -328,7 +382,13 @@ class UserPermission extends Component {
               />
             </div>
           </div>
-          <div className={this.state.permission_2_visibility ? "user-permission-dropdown-content" : "d-none"}>
+          <div
+            className={
+              this.state.permission_2_visibility
+                ? "user-permission-dropdown-content"
+                : "d-none"
+            }
+          >
             {mappedPermissionGroup_2}
           </div>
         </div>
@@ -339,14 +399,14 @@ class UserPermission extends Component {
             <div className="user-permission-permission-title">
               <button
                 className="user-permission-dropbtn"
-                onClick={()=>this.togglePermissionThree()}
+                onClick={() => this.togglePermissionThree()}
               >
                 Permission Group 3
               </button>
             </div>
             <div
               className="user-permission-toggleBtn"
-              onClick={this.toggleGroupPermission("group_3")}
+              onClick={(e) => this.toggleGroupPermission(e, "group_3")}
             >
               <ToggleButton
                 toggleChecked={this.state.permission_group_3 ? true : false}
@@ -355,7 +415,13 @@ class UserPermission extends Component {
               />
             </div>
           </div>
-          <div className={this.state.permission_3_visibility ? "user-permission-dropdown-content" : "d-none"}>
+          <div
+            className={
+              this.state.permission_3_visibility
+                ? "user-permission-dropdown-content"
+                : "d-none"
+            }
+          >
             {mappedPermissionGroup_3}
           </div>
         </div>
