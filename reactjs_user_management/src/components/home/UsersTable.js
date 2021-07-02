@@ -117,7 +117,7 @@ class UsersTable extends Component {
             <img src={user.status==="active" ? UserIcon : DisabledUser} alt="User Icon" />
           </td>
           <td>
-            <div className="user-info">
+            <div className={user.status==="active"?"user-info":"user-info gray-text"}>
               <span>{user.name}</span>
               <p>{user.email}</p>
             </div>
@@ -132,7 +132,7 @@ class UsersTable extends Component {
               <div className="disabled-img">
               <img src={DisabledKey} alt="Disabled Key" className={user.role === "admin"&&user.status!=="active"?"disabledKey" : "d-none"}/>
               </div>
-              <p>{user.role}</p>
+              <p className={user.status!=="active"?"gray-text":null}>{user.role}</p>
             </div>
           </td>
           <td className="td-status">

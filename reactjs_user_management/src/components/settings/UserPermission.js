@@ -24,6 +24,7 @@ class UserPermission extends Component {
     this.setSuperAdmin = this.setSuperAdmin.bind(this);
     this.setPermissionGroupStatus = this.setPermissionGroupStatus.bind(this);
     this.setPermissions = this.setPermissions.bind(this);
+    this.setPermissionToGroup=this.setPermissionToGroup.bind(this);
   }
   componentDidMount() {
     const permissions = this.setPermissionGroupStatus();
@@ -82,12 +83,12 @@ class UserPermission extends Component {
           return { permission_group_1: !prevState.permission_group_1 };
         });
         setTimeout(() => {
-          const newUser = this.setPermissions();
+          const newUser = this.setPermissionToGroup("per_group_1");
           this.props.modifyUserInArray(newUser);
-        }, 10);
+        }, 50);
         setTimeout(() => {
           this.setSuperAdmin();
-        }, 10);
+        }, 50);
 
         return;
 
@@ -96,12 +97,12 @@ class UserPermission extends Component {
           return { permission_group_2: !prevState.permission_group_2 };
         });
         setTimeout(() => {
-          const newUser = this.setPermissions();
+          const newUser = this.setPermissionToGroup("per_group_2");
           this.props.modifyUserInArray(newUser);
-        }, 10);
+        }, 50);
         setTimeout(() => {
           this.setSuperAdmin();
-        }, 10);
+        }, 50);
         return;
 
       case "group_3":
@@ -109,12 +110,12 @@ class UserPermission extends Component {
           return { permission_group_3: !prevState.permission_group_3 };
         });
         setTimeout(() => {
-          const newUser = this.setPermissions();
+          const newUser = this.setPermissionToGroup("per_group_3");
           this.props.modifyUserInArray(newUser);
-        }, 10);
+        }, 50);
         setTimeout(() => {
           this.setSuperAdmin();
-        }, 10);
+        }, 50);
         return;
         default:return;
     }
@@ -195,6 +196,44 @@ class UserPermission extends Component {
       }
     }
     return permissions;
+  }
+  setPermissionToGroup(group_name){
+    let clonedActiveUser = { ...this.props.user };
+    switch(group_name){
+      case "per_group_1":
+    if (this.state.permission_group_1 === true) {
+      for (const item in clonedActiveUser.per_group_1) {
+        clonedActiveUser.per_group_1[item] = "true";
+      }
+    } else {
+      for (const item in clonedActiveUser.per_group_1) {
+        clonedActiveUser.per_group_1[item] = "false";
+      }
+    } return clonedActiveUser;
+    case "per_group_2":
+      if (this.state.permission_group_2 === true) {
+        for (const item in clonedActiveUser.per_group_2) {
+          clonedActiveUser.per_group_2[item] = "true";
+        }
+      } else {
+        for (const item in clonedActiveUser.per_group_2) {
+          clonedActiveUser.per_group_2[item] = "false";
+        }
+      }
+      return clonedActiveUser;
+      case "per_group_3":
+        if (this.state.permission_group_3 === true) {
+          for (const item in clonedActiveUser.per_group_3) {
+            clonedActiveUser.per_group_3[item] = "true";
+          }
+        } else {
+          for (const item in clonedActiveUser.per_group_3) {
+            clonedActiveUser.per_group_3[item] = "false";
+          }
+        }
+        return clonedActiveUser;
+        default:return;
+  }
   }
   setPermissions() {
     let clonedActiveUser = { ...this.props.user };
