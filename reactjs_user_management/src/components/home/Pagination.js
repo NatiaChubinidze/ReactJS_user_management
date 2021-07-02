@@ -2,6 +2,7 @@ import "../../styles/home/Pagination.css";
 import Arrow from "../../assets/icons/down-arrow.png";
 
 function Pagination(props) {
+  
   return (
     <div className="pagination-footer">
       <div className="pagination-wrapper">
@@ -21,6 +22,12 @@ function Pagination(props) {
             </li>
           </ul>
         </div>
+      </div>
+      <div className="pagination-space">
+        <div className="pagination-item">Previous</div>
+        <div className="pagination-item active-page">1</div>
+        <div className="pagination-item">2</div>
+        <div className="pagination-item">Next</div>
       </div>
     </div>
   );
