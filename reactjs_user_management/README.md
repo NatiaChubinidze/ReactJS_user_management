@@ -12,7 +12,7 @@ Check out the deployed version on Netlify:
 
 - React
 - React Router
-- CSS or a UI library (Bootstrap)
+- CSS and Bootstrap
 - Netlify (for deployment)
 
 ## 📦 Installation
